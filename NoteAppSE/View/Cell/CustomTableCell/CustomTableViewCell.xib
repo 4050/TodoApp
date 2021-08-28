@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomTableViewCell" rowHeight="0.0" id="KGk-i7-Jjw" customClass="CustomTableViewCell" customModule="NoteAppSE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zbg-ns-iBQ">
+                        <rect key="frame" x="16" y="5" width="288" height="40"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ii7-tU-O8J">
+                                <rect key="frame" x="49" y="3" width="231" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26k-MA-Q0l">
+                                <rect key="frame" x="20" y="9" width="21" height="22"/>
+                                <state key="normal" title="Button" image="emptyRectangle">
+                                    <color key="titleShadowColor" systemColor="labelColor"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                </state>
+                                <state key="highlighted" image="fullRectangle"/>
+                                <connections>
+                                    <action selector="radioButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="WMt-a8-0S7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ii7-tU-O8J" secondAttribute="trailing" constant="8" id="8KG-RF-msN"/>
+                            <constraint firstItem="Ii7-tU-O8J" firstAttribute="top" secondItem="Zbg-ns-iBQ" secondAttribute="top" constant="3" id="Axh-x5-7Gr"/>
+                            <constraint firstAttribute="bottom" secondItem="26k-MA-Q0l" secondAttribute="bottom" constant="9" id="BSK-v4-Ton"/>
+                            <constraint firstItem="26k-MA-Q0l" firstAttribute="leading" secondItem="Zbg-ns-iBQ" secondAttribute="leading" constant="20" symbolic="YES" id="JIN-Z4-NSg"/>
+                            <constraint firstAttribute="bottom" secondItem="Ii7-tU-O8J" secondAttribute="bottom" constant="3" id="V1G-gH-PxS"/>
+                            <constraint firstItem="Ii7-tU-O8J" firstAttribute="leading" secondItem="Zbg-ns-iBQ" secondAttribute="leading" constant="49" id="lDo-NM-laV"/>
+                            <constraint firstItem="Ii7-tU-O8J" firstAttribute="leading" secondItem="26k-MA-Q0l" secondAttribute="trailing" constant="8" symbolic="YES" id="miz-Su-dBo"/>
+                            <constraint firstItem="26k-MA-Q0l" firstAttribute="top" secondItem="Zbg-ns-iBQ" secondAttribute="top" constant="9" id="v0Q-T2-XzS"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Zbg-ns-iBQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="3tB-49-AxM"/>
+                    <constraint firstAttribute="bottom" secondItem="Zbg-ns-iBQ" secondAttribute="bottom" constant="5" id="6t0-FT-hUs"/>
+                    <constraint firstAttribute="trailing" secondItem="Zbg-ns-iBQ" secondAttribute="trailing" constant="16" id="gVM-ZR-HKv"/>
+                    <constraint firstItem="Zbg-ns-iBQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="pCH-en-erR"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="radioButton" destination="26k-MA-Q0l" id="xs6-x8-zUj"/>
+                <outlet property="taskName" destination="Ii7-tU-O8J" id="sN4-gT-QkB"/>
+                <outlet property="view" destination="Zbg-ns-iBQ" id="xKq-oU-Tar"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="87.053571428571431"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="emptyRectangle" width="20" height="20"/>
+        <image name="fullRectangle" width="20" height="20"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
