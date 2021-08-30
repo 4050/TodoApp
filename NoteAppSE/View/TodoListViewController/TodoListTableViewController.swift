@@ -12,12 +12,12 @@ class TodoListTableViewController: UITableViewController {
     
     var groupList: GroupListModel?
     var taskList: [TaskModel]?
-    private var taskListTableView = TodoListTableView()
+    //private var taskListTableView = TodoListTableView()
     
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
-        setupData()
+        //setupData()
         setupTableView()
     }
     
@@ -28,10 +28,6 @@ class TodoListTableViewController: UITableViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.register(CustomTableViewCell.nib, forCellReuseIdentifier:  CustomTableViewCell.identifier)
         tableView.separatorColor = .clear
-    }
-    
-    func setupData() {
-        
     }
     
     
@@ -60,22 +56,22 @@ class TodoListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList?.count ?? 0
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
         cell.taskName.text = taskList![indexPath.row].taskName
         cell.delegate = self
         cell.layer.masksToBounds = true
         cell.selectionStyle = .none
-        
+
         return cell
-        
+
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50.0;
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell {
             if cell.radioButton.isHighlighted {
@@ -85,14 +81,14 @@ class TodoListTableViewController: UITableViewController {
             }
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             taskList?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in

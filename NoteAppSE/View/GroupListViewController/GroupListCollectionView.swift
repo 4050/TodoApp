@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GroupListCollectionView: UICollectionView{
+class GroupListCollectionView: UICollectionView {
     
     let itemsPerRow: CGFloat = 2
     let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
@@ -33,40 +33,39 @@ class GroupListCollectionView: UICollectionView{
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
         let config = UICollectionLayoutListConfiguration(appearance:
-                                                            .plain)
+                                                            .insetGrouped)
         collectionViewLayout =
           UICollectionViewCompositionalLayout.list(using: config)
-
-    }
-}
-
-
-extension GroupListCollectionView: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-  
-        let paddingWidth = sectionInserts.left
-        let availableWidth = collectionView.frame.width - paddingWidth
-        let widthPerItem = availableWidth
-        return CGSize(width: widthPerItem, height: 50)
-    }
-  
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInserts
-    }
-  
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInserts.left
-    }
-  
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInserts.left
     }
     
     func setupValue(groupList: [GroupListModel]?) {
         self.groupList = groupList
     }
 }
+
+
+//extension GroupListCollectionView: UICollectionViewDelegateFlowLayout {
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//  
+//        let paddingWidth = sectionInserts.left
+//        let availableWidth = collectionView.frame.width - paddingWidth
+//        let widthPerItem = availableWidth
+//        return CGSize(width: widthPerItem, height: 50)
+//    }
+//  
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return sectionInserts
+//    }
+//  
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return sectionInserts.left
+//    }
+//  
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return sectionInserts.left
+//    }
+//}
 
 extension GroupListCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
