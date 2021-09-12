@@ -28,7 +28,7 @@ class GroupListCollectionView: UICollectionView {
     func setupCollectionView() {
         delegate = self
         dataSource = self
-        register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        register(CustomCollectionViewCell.nib, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         translatesAutoresizingMaskIntoConstraints = false
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
@@ -75,6 +75,7 @@ extension GroupListCollectionView: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
         cell.sheetNameLabel.text = groupList![indexPath.row].nameGroup
+       // cell.descriptionLabel.text = "123"
         return cell
     }
     

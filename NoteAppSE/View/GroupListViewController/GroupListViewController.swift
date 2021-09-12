@@ -25,6 +25,19 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
     private var groupListCollectionView = GroupListCollectionView()
     private var dateService = DateService()
     
+    private let addButton: UIButton = {
+        let button = UIButton()
+        let boldLargeConfig = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .bold, scale: .large)
+        let smallConfig = UIImage.SymbolConfiguration(scale: .large)
+        let boldSmallConfig = boldLargeConfig.applying(smallConfig)
+        button.setImage(UIImage(systemName: "plus", withConfiguration: boldSmallConfig), for: UIControl.State.normal)
+        button.setTitle("Добавить список", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         groupListCollectionView.delegatePassData = self
@@ -36,8 +49,15 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         setupValueCell()
         groupListCollectionView.backgroundColor = .blue.withAlphaComponent(0.2)
         //navButton()
-        setupNavigationBar()
         
+        setupNavigationBar()
+        view.addSubview(addButton)
+        //addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        //addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,18 +70,22 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         groupListCollectionView.reloadData()
     }
     
-   // func navButton() {
-   //     let image = UIImage(systemName: Image.gearshape)
-   //     self.navigationItem.rightBarButtonItem = self.editButtonItem
-   //     self.navigationItem.rightBarButtonItem?.primaryAction = UIAction(image: image) { _ in
-   //         self.setEditing(!self.isEditing, animated: true)
-   //     }
-   // }
-   //
-   // override func setEditing(_ editing: Bool, animated: Bool) {
-   //     super.setEditing(editing, animated:animated)
-   //     self.groupListCollectionView.isEditing = editing
-   // }
+    @objc func tapAddButton() {
+        print("123")
+    }
+    
+    // func navButton() {
+    //     let image = UIImage(systemName: Image.gearshape)
+    //     self.navigationItem.rightBarButtonItem = self.editButtonItem
+    //     self.navigationItem.rightBarButtonItem?.primaryAction = UIAction(image: image) { _ in
+    //         self.setEditing(!self.isEditing, animated: true)
+    //     }
+    // }
+    //
+    // override func setEditing(_ editing: Bool, animated: Bool) {
+    //     super.setEditing(editing, animated:animated)
+    //     self.groupListCollectionView.isEditing = editing
+    // }
     
     
     func setupNavigationBar() {
@@ -88,7 +112,10 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
                                                                                                    TaskModel(taskName: "Bench Press"),
                                                                                                    TaskModel(taskName: "Bench Press"), TaskModel(taskName: "Bench Press"), TaskModel(taskName: "Bench Press")]),
                      GroupListModel(nameGroup: "Shop", numberTasks: "2", colorCell: nil),
-                     GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil)]
+                     GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil),
+                     GroupListModel(nameGroup: "Работа", numberTasks: "11", colorCell: nil),
+                     GroupListModel(nameGroup: "HomeTODO", numberTasks: "10", colorCell: nil),
+        ]
         groupListCollectionView.setupValue(groupList: groupList)
     }
     

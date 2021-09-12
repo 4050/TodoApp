@@ -12,29 +12,25 @@ class TodoListTableViewController: UITableViewController {
     
     var groupList: GroupListModel?
     var taskList: [TaskModel]?
-    //private var taskListTableView = TodoListTableView()
     
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
-        //setupData()
         setupTableView()
     }
     
     func setupTableView() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         tableView.register(CustomTableViewCell.nib, forCellReuseIdentifier:  CustomTableViewCell.identifier)
         tableView.separatorColor = .clear
     }
     
-    
     func setupNavigationBar() {
         let image = UIImage(systemName: Image.gearshape)
-        let imgBackArrow = UIImage(named: Image.imgBackArrow)
-        
+    
         title = groupList?.nameGroup
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
