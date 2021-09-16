@@ -8,29 +8,56 @@
 import Foundation
 import UIKit
 
-class TodoListTableViewController: UITableViewController {
+class TodoListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var groupList: GroupListModel?
     var taskList: [TaskModel]?
+    var tableView = UITableView()
+    
+    private let addButton: UIButton = {
+        let button = UIButton()
+        let boldLargeConfig = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .bold, scale: .large)
+        let smallConfig = UIImage.SymbolConfiguration(scale: .large)
+        let boldSmallConfig = boldLargeConfig.applying(smallConfig)
+        button.setImage(UIImage(systemName: "plus", withConfiguration: boldSmallConfig), for: UIControl.State.normal)
+        button.setTitle("Добавить список", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     override func viewDidLoad() {
+        tableView.frame = self.view.frame
         tableView.delegate = self
         tableView.dataSource = self
-        setupTableView()
+        tableView.separatorColor = .clear
+        view.addSubview(tableView)
+
+        tableView.register(CustomTableViewCell.nib, forCellReuseIdentifier:  CustomTableViewCell.identifier)
+        
+        view.addSubview(addButton)
+        //addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        //addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+    }
+    
+    @objc func tapAddButton() {
+        print("123")
     }
     
     func setupTableView() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
-        tableView.register(CustomTableViewCell.nib, forCellReuseIdentifier:  CustomTableViewCell.identifier)
-        tableView.separatorColor = .clear
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func setupNavigationBar() {
         let image = UIImage(systemName: Image.gearshape)
-    
         title = groupList?.nameGroup
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
@@ -49,26 +76,25 @@ class TodoListTableViewController: UITableViewController {
         setupNavigationBar()
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList?.count ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
         cell.taskName.text = taskList![indexPath.row].taskName
         cell.delegate = self
         cell.layer.masksToBounds = true
         cell.selectionStyle = .none
-
         return cell
 
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50.0;
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell {
             if cell.radioButton.isHighlighted {
                 cell.radioButton.backgroundColor = .black
@@ -78,14 +104,14 @@ class TodoListTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             taskList?.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
             self.taskList?.remove(at: indexPath.row)
