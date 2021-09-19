@@ -30,10 +30,17 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         let boldLargeConfig = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .bold, scale: .large)
         let smallConfig = UIImage.SymbolConfiguration(scale: .large)
         let boldSmallConfig = boldLargeConfig.applying(smallConfig)
-        button.setImage(UIImage(systemName: "plus", withConfiguration: boldSmallConfig), for: UIControl.State.normal)
-        button.setTitle("Добавить список", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        //button.setImage(UIImage(systemName: "plus", withConfiguration: boldSmallConfig), for: UIControl.State.normal)
+        button.setTitle("Новый список", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
+        button.layer.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        button.layer.cornerRadius = 15
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 5, height: 5)
+        button.layer.shadowRadius = 5
+        button.layer.shadowOpacity = 1.0
+        button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -56,8 +63,8 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         //addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        addButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
