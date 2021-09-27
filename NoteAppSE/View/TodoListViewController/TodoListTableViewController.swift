@@ -14,6 +14,8 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
     var taskList: [TaskModel]?
     var tableView = UITableView()
     
+    var color: UIColor?
+    
     private let addButton: UIButton = {
         let button = UIButton()
         let boldLargeConfig = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .bold, scale: .large)
@@ -50,7 +52,14 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @objc func tapAddButton() {
-        print("123")
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "AddTaskViewController") as! AddTaskViewController
+        let navigationController = UINavigationController(rootViewController: vc)
+        vc.todoListTableViewController = self
+        navigationController.modalPresentationStyle = .automatic
+        present(navigationController, animated: true)
+        //navigationController?.present(vc, animated: true, completion: nil)
     }
     
     func setupTableView() {
@@ -91,6 +100,10 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
         setupNavigationBar()
     }
     
+    func selectColor(color: UIColor) {
+        self.color = color
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList?.count ?? 0
     }
@@ -98,6 +111,8 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
         cell.taskName.text = taskList![indexPath.row].taskName
+        let color = UIColor(hex: taskList![indexPath.row].colorCell ?? "")
+        cell.customColor = color
         if cell.radioButtonTap == false {
             cell.setupEmptyRadioButton()
         }
@@ -140,6 +155,11 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
         deleteAction.backgroundColor = .systemRed
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
+    }
+    
+    func addTaskToTaskList(task: TaskModel) {
+        taskList?.append(task)
+        tableView.reloadData()
     }
 }
 

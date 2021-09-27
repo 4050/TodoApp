@@ -16,5 +16,6 @@ struct GroupListModel {
 
 struct TaskModel {
     var taskName: String?
+    var colorCell: String?
 }
 
