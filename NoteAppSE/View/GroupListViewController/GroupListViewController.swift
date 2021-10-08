@@ -13,14 +13,6 @@ protocol GroupListViewControllerProtocol: AnyObject {
 
 class GroupListViewController: UIViewController, GroupListViewControllerProtocol {
     
-    //  @IBOutlet weak var dateButton: UIButton! {
-    //      didSet {
-    //          let currentDate = setupCurrentDate()
-    //          self.dateButton.setTitle(currentDate, for: .normal)
-    //      }
-    //  }
-    
-    
     private var groupList: [GroupListModel]?
     private var groupListCollectionView = GroupListCollectionView()
     private var dateService = DateService()
@@ -62,7 +54,6 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         groupListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         setupValueCell()
         groupListCollectionView.backgroundColor = .blue.withAlphaComponent(0.2)
-        //navButton()
         
         setupNavigationBar()
         view.addSubview(addButton)
@@ -88,20 +79,6 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         print("123")
     }
     
-    // func navButton() {
-    //     let image = UIImage(systemName: Image.gearshape)
-    //     self.navigationItem.rightBarButtonItem = self.editButtonItem
-    //     self.navigationItem.rightBarButtonItem?.primaryAction = UIAction(image: image) { _ in
-    //         self.setEditing(!self.isEditing, animated: true)
-    //     }
-    // }
-    //
-    // override func setEditing(_ editing: Bool, animated: Bool) {
-    //     super.setEditing(editing, animated:animated)
-    //     self.groupListCollectionView.isEditing = editing
-    // }
-    
-    
     func setupNavigationBar() {
         
         let currentDate = setupCurrentDate()
@@ -122,11 +99,12 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
     
     func setupValueCell() {
         groupList = [GroupListModel(nameGroup: "HomeTODO", numberTasks: "10", colorCell: nil),
-                     GroupListModel(nameGroup: "Gym", numberTasks: "5", colorCell: nil, taskList: [TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
+                     GroupListModel(nameGroup: "Gym", numberTasks: "5", colorCell: nil, taskList: [TaskModel(taskName: "Bench Press", colorCell: "#9992ff", completedTask: false),
                                                                                                    TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
                                                                                                    TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
                                                                                                    TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
-                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff")]),
+                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
+                                                                                                  ]),
                      GroupListModel(nameGroup: "Shop", numberTasks: "2", colorCell: nil),
                      GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil),
                      GroupListModel(nameGroup: "Работа", numberTasks: "11", colorCell: nil),

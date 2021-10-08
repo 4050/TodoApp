@@ -39,18 +39,15 @@ class AddTaskViewController: UITableViewController {
     @objc func addTapped() {
         let task: String = textField.text!
         let color: String = selectColor!
-        let taskModel = TaskModel(taskName: task, colorCell: color)
-        print(taskModel)
+        let taskModel = TaskModel(taskName: task, colorCell: color, completedTask: false)
         todoListTableViewController?.addTaskToTaskList(task: taskModel)
         dismiss(animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        }
-        else {
+        } else {
             let indexPathCheckmark = IndexPath(row: checkmarkIndex ?? 0, section: 1)
             tableView.cellForRow(at: indexPathCheckmark)?.accessoryType = .none
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark

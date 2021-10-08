@@ -17,5 +17,12 @@ struct GroupListModel {
 struct TaskModel {
     var taskName: String?
     var colorCell: String?
+    var completedTask: Bool?
+    
+    init(taskName: String? = nil, colorCell: String? = nil, completedTask: Bool? = nil) {
+        self.taskName = taskName
+        self.colorCell = colorCell
+        self.completedTask = completedTask
+    }
 }
 
