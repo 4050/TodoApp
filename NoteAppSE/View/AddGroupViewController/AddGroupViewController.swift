@@ -1,21 +1,22 @@
 //
-//  AddTaskViewController.swift
+//  AddGroupViewController.swift
 //  NoteAppSE
 //
-//  Created by Stanislav on 19.09.2021.
+//  Created by Stanislav on 24.10.2021.
 //
 
 import UIKit
 
-class AddTaskViewController: UITableViewController {
+class AddGroupViewController: UITableViewController {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var colorView: UIView!
-    
+
     var selectColor: String?
     var checkmarkIndex: Int?
+    var groupListViewController: GroupListViewController?
     
-    var todoListTableViewController: TodoListTableViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dismissKeyboard()
@@ -36,12 +37,12 @@ class AddTaskViewController: UITableViewController {
     }
     
     @objc func addTapped() {
-        let task: String = textField.text ?? "Empty"
-        let color: String = selectColor ?? UIColor.systemBlue.toHexString()
-        let taskModel = TaskModel(taskName: task, colorCell: color, completedTask: false)
-        todoListTableViewController?.addTaskToTaskList(task: taskModel)
+        let nameGroup: String = textField.text ?? "Empty"
+        let groupModel = GroupListModel(nameGroup: nameGroup, numberTasks: nil, colorCell: nil, taskList: nil)
+        groupListViewController?.addGroupToGroupList(group: groupModel)
         dismiss(animated: true, completion: nil)
     }
+
     
     func selectCellColor(indexPath: IndexPath) {
         if tableView.cellForRow(at: indexPath) != nil {
@@ -75,5 +76,5 @@ class AddTaskViewController: UITableViewController {
             selectCellColor(indexPath: indexPath)
         }
     }
-}
 
+}

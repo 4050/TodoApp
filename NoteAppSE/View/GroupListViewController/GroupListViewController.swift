@@ -14,8 +14,9 @@ protocol GroupListViewControllerProtocol: AnyObject {
 class GroupListViewController: UIViewController, GroupListViewControllerProtocol {
     
     private var groupList: [GroupListModel]?
-    private var groupListCollectionView = GroupListCollectionView()
+    public var groupListCollectionView = GroupListCollectionView()
     private var dateService = DateService()
+    private var colorTheme = Colors.defaultColor
     
     private let addButton: UIButton = {
         let button = UIButton()
@@ -25,10 +26,6 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
             button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
             button.configuration = .filled()
             button.configuration?.baseBackgroundColor = UIColor.systemBlue
-            button.configuration?.image = UIImage(systemName: "pencil",
-                                                  withConfiguration: UIImage.SymbolConfiguration(scale: .large))
-            button.configuration?.imagePlacement = .trailing
-            button.configuration?.imagePadding = 8.0
             button.layer.cornerRadius = 15
             button.layer.masksToBounds = true
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -57,9 +54,7 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         
         setupNavigationBar()
         view.addSubview(addButton)
-        //addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-        //addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -70,17 +65,21 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         groupListCollectionView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        groupListCollectionView.reloadData()
-    }
+   // override func viewDidAppear(_ animated: Bool) {
+   //     super.viewDidAppear(animated)
+   //     groupListCollectionView.reloadData()
+   // }
     
     @objc func tapAddButton() {
-        print("123")
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "AddGroupViewController") as! AddGroupViewController
+        let navigationController = UINavigationController(rootViewController: vc)
+        vc.groupListViewController = self
+        navigationController.modalPresentationStyle = .automatic
+        present(navigationController, animated: true)
     }
     
     func setupNavigationBar() {
-        
         let currentDate = setupCurrentDate()
         title = currentDate
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -91,7 +90,6 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         navigationController?.navigationBar.backItem?.title = ""
         navigationController?.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
-    
     
     func setupCurrentDate() -> String {
         return dateService.getCurrentDate()
@@ -105,12 +103,19 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
                                                                                                    TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
                                                                                                    TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
                                                                                                   ]),
-                     GroupListModel(nameGroup: "Shop", numberTasks: "2", colorCell: nil),
-                     GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil),
-                     GroupListModel(nameGroup: "Работа", numberTasks: "11", colorCell: nil),
-                     GroupListModel(nameGroup: "HomeTODO", numberTasks: "10", colorCell: nil),
+                     GroupListModel(nameGroup: "Shop", numberTasks: "2", colorCell: nil, taskList: [TaskModel(taskName: "Milk", colorCell: "#9992ff", completedTask: false)]),
+                     GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil, taskList: []),
+                     GroupListModel(nameGroup: "Работа", numberTasks: "11", colorCell: nil, taskList: []),
+                     GroupListModel(nameGroup: "HomeTODO", numberTasks: nil, colorCell: nil, taskList: []),
+                     GroupListModel(nameGroup: "`12`", numberTasks: nil, colorCell: nil, taskList: [])
         ]
         groupListCollectionView.setupValue(groupList: groupList)
+    }
+    
+    func addGroupToGroupList(group: GroupListModel) {
+        groupList?.append(group)
+        groupListCollectionView.setupValue(groupList: groupList)
+        groupListCollectionView.reloadData()
     }
     
     func passData(index: Int) {
@@ -119,7 +124,6 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         vc.groupList = groupList![index]
         vc.taskList = groupList![index].taskList
         navigationController?.pushViewController(vc, animated: true)
-        
     }
 }
 

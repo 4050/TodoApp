@@ -43,30 +43,6 @@ class GroupListCollectionView: UICollectionView {
     }
 }
 
-
-//extension GroupListCollectionView: UICollectionViewDelegateFlowLayout {
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//  
-//        let paddingWidth = sectionInserts.left
-//        let availableWidth = collectionView.frame.width - paddingWidth
-//        let widthPerItem = availableWidth
-//        return CGSize(width: widthPerItem, height: 50)
-//    }
-//  
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInserts
-//    }
-//  
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInserts.left
-//    }
-//  
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInserts.left
-//    }
-//}
-
 extension GroupListCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groupList!.count
@@ -75,7 +51,6 @@ extension GroupListCollectionView: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
         cell.sheetNameLabel.text = groupList![indexPath.row].nameGroup
-       // cell.descriptionLabel.text = "123"
         return cell
     }
     
@@ -84,4 +59,5 @@ extension GroupListCollectionView: UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
         delegatePassData?.passData(index: indexPath.row)
     }
+    
 }

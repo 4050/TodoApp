@@ -1,51 +1,22 @@
 //
-//  TodoListTableView.swift
+//  TodoListTableViewController + UITableView.swift
 //  NoteAppSE
 //
-//  Created by Stanislav on 01.07.2021.
+//  Created by Stanislav on 14.10.2021.
 //
 
+import Foundation
 import UIKit
 
-class TodoListTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
-    
-    var groupList: GroupListModel?
-    var taskList: [TaskModel]?
-    var tableView = UITableView()
-    
-    override init(frame: CGRect, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
-        delegate = self
-        dataSource = self
-        setupTableView()
-        reloadData()
-        print("TABLEVIEW")
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func setupTableView() {
-        //tableView.backgroundColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
-        tableView.separatorColor = .clear
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(CustomTableViewCell.nib, forCellReuseIdentifier:  CustomTableViewCell.identifier)
-    }
-    
-    func setupValueCell(groupList: GroupListModel?, taskList: [TaskModel]?) {
-        self.groupList = groupList
-        self.taskList = taskList
-    }
-    
+extension TodoListTableViewController {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        cell.taskName.text = taskList![indexPath.row].taskName
         let color = UIColor(hex: taskList![indexPath.row].colorCell ?? "")
+        cell.taskName.text = taskList![indexPath.row].taskName
         cell.customColor = color
         if cell.radioButtonTap == false {
             cell.setupEmptyRadioButton()
@@ -88,24 +59,5 @@ class TodoListTableView: UITableView, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         taskList?.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
-    
-    func setupValueCell(taskList: [TaskModel]) {
-        self.taskList = taskList
-    }
 }
 
-extension TodoListTableView: MyCellDelegate {
-    func didTapButtonInCell(_ cell: CustomTableViewCell) {
-        if cell.radioButtonTap {
-            cell.radioButtonTap = false
-            cell.taskName.isUserInteractionEnabled = true
-            cell.setupEmptyRadioButton()
-            cell.taskName.alpha = 1
-        } else {
-            cell.taskName.isUserInteractionEnabled = false
-            cell.radioButtonTap = true
-            cell.setupFullRadioButton()
-            cell.taskName.alpha = 0.5
-        }
-    }
-}
