@@ -14,7 +14,7 @@ class AddGroupViewController: UITableViewController {
 
     var selectColor: String?
     var checkmarkIndex: Int?
-    var groupListViewController: GroupListViewController?
+    var taskGroupsListTableViewController: TaskGroupsListViewController?
     
     
     override func viewDidLoad() {
@@ -25,12 +25,12 @@ class AddGroupViewController: UITableViewController {
     
     func setupNavigationBar() {
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: Colors.defaultColor.cgColor]
-        appearance.largeTitleTextAttributes = [.foregroundColor: Colors.defaultColor.cgColor]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         
         title = "Новая задача"
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = Colors.defaultColor
+        navigationController?.navigationBar.tintColor = UIColor(hex: Colors.darkColor)
         navigationController?.navigationBar.backItem?.title = ""
         navigationController?.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(addTapped))
@@ -38,8 +38,9 @@ class AddGroupViewController: UITableViewController {
     
     @objc func addTapped() {
         let nameGroup: String = textField.text ?? "Empty"
-        let groupModel = GroupListModel(nameGroup: nameGroup, numberTasks: nil, colorCell: nil, taskList: nil)
-        groupListViewController?.addGroupToGroupList(group: groupModel)
+        let groupModel = GroupListModel(nameGroup: nameGroup, numberTasks: nil, colorCell: selectColor, taskList: [])
+
+        taskGroupsListTableViewController?.addGroupToGroupList(group: groupModel)
         dismiss(animated: true, completion: nil)
     }
 

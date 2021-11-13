@@ -24,12 +24,12 @@ class AddTaskViewController: UITableViewController {
     
     func setupNavigationBar() {
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: Colors.defaultColor.cgColor]
-        appearance.largeTitleTextAttributes = [.foregroundColor: Colors.defaultColor.cgColor]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         
         title = "Новая задача"
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = Colors.defaultColor
+        navigationController?.navigationBar.tintColor = UIColor(hex: Colors.darkColor)
         navigationController?.navigationBar.backItem?.title = ""
         navigationController?.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(addTapped))

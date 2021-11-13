@@ -29,10 +29,10 @@
             </objects>
             <point key="canvasLocation" x="-913" y="88"/>
         </scene>
-        <!--Group List View Controller-->
+        <!--Task Groups List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GroupListViewController" customModule="NoteAppSE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TaskGroupsListViewController" customModule="NoteAppSE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -242,7 +242,6 @@
         <!--AddGroupViewController-->
         <scene sceneID="Gqc-ZQ-ixA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rvZ-Aa-Wsy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="AddGroupViewController" title="AddGroupViewController" modalPresentationStyle="pageSheet" id="WYt-WQ-Jjl" customClass="AddGroupViewController" customModule="NoteAppSE" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="sBA-kA-JKA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
@@ -251,7 +250,7 @@
                         <sections>
                             <tableViewSection headerTitle="Название списка" id="5Zl-zD-92K">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="40" id="Q0t-Fg-FG7">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="40" id="Q0t-Fg-FG7">
                                         <rect key="frame" x="20" y="55.5" width="374" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q0t-Fg-FG7" id="zJG-4S-uYT">
@@ -415,6 +414,7 @@
                         <outlet property="textField" destination="F7z-Ps-AQ4" id="ZoI-Md-E5G"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rvZ-Aa-Wsy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="679.71014492753625" y="813.61607142857144"/>
         </scene>

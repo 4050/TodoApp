@@ -14,5 +14,10 @@ enum Image {
 }
 
 enum Colors {
-    static let defaultColor = UIColor.systemBlue
+    static let blueColor = "#007aff"
+    static let greenColor = "#30d158"
+    static let redColor = "#ff2d55"
+    static let purpleColor = "#af52de"
+    static let darkColor = "#000000"
+    
 }

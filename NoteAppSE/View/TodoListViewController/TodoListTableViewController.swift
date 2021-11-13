@@ -15,10 +15,10 @@ enum BarButtonItem {
 
 class TodoListTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-     var groupList: GroupListModel?
-     var taskList: [TaskModel]?
-     var tableView = UITableView()
-     var color: UIColor?
+    var groupList: GroupListModel?
+    var taskList: [TaskModel]?
+    var tableView = UITableView()
+    var selectColor: UIColor?
     
     private let addButton: UIButton = {
         let button = UIButton()
@@ -28,7 +28,7 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         button.setTitle("Новая задача", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
-        button.layer.backgroundColor = Colors.defaultColor.cgColor
+        //button.layer.backgroundColor = color?.cgColor()
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 5, height: 5)
@@ -46,6 +46,7 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         view.addSubview(tableView)
         setupTableView()
         view.addSubview(addButton)
+        addButton.backgroundColor = selectColor
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
@@ -80,15 +81,15 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         title = groupList?.nameGroup
         
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: Colors.defaultColor]
-        appearance.largeTitleTextAttributes = [.foregroundColor: Colors.defaultColor]
+        appearance.titleTextAttributes = [.foregroundColor: selectColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: selectColor]
         
         navigationItem.standardAppearance = appearance
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = Colors.defaultColor
+        navigationController?.navigationBar.tintColor = selectColor
         navigationController?.navigationBar.backItem?.title = ""
         navigationController?.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         setupRightBarButtonItem(buttonItem: .menu)
@@ -109,10 +110,6 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         case .apply:
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(didTapApply))
         }
-    }
-
-    func selectColor(color: UIColor) {
-        self.color = color
     }
     
     func didTapSort() {

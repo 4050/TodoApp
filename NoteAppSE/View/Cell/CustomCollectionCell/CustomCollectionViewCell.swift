@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomCollectionViewCell: UICollectionViewListCell {
+class CustomCollectionViewCell: UITableViewCell {
     
     @IBOutlet weak var sheetNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -25,9 +25,5 @@ class CustomCollectionViewCell: UICollectionViewListCell {
 
     class var nib: UINib {
         return UINib(nibName: identifier, bundle: nil)
-    }
-    
-    enum Constants {
-        static let padding: CGFloat = 10
     }
 }
