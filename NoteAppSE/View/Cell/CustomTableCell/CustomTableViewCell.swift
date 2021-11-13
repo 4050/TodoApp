@@ -17,6 +17,8 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var radioButton: UIButton!
     
+    var customColor: UIColor?
+    
     var delegate: MyCellDelegate?
     var radioButtonTap: Bool = false
 
@@ -28,13 +30,13 @@ class CustomTableViewCell: UITableViewCell {
     func setupEmptyRadioButton() {
         radioButton.layer.cornerRadius = 5
         radioButton.layer.borderWidth = 1
-        radioButton.layer.borderColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
+        radioButton.layer.borderColor = customColor?.cgColor
         radioButton.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     func setupFullRadioButton() {
         radioButton.layer.cornerRadius = 5
-        radioButton.layer.backgroundColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
+        radioButton.layer.backgroundColor = customColor?.cgColor
         
     }
     

@@ -27,21 +27,28 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
     
     private let addButton: UIButton = {
         let button = UIButton()
-        let boldLargeConfig = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .bold, scale: .large)
-        let smallConfig = UIImage.SymbolConfiguration(scale: .large)
-        let boldSmallConfig = boldLargeConfig.applying(smallConfig)
-        //button.setImage(UIImage(systemName: "plus", withConfiguration: boldSmallConfig), for: UIControl.State.normal)
-        button.setTitle("Новый список", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
-        button.layer.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        button.layer.cornerRadius = 15
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 5, height: 5)
-        button.layer.shadowRadius = 5
-        button.layer.shadowOpacity = 1.0
-        button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 15.0, *) {
+            button.setTitle("Новый список", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
+            button.configuration = .filled()
+            button.configuration?.baseBackgroundColor = UIColor.systemBlue
+            button.configuration?.image = UIImage(systemName: "pencil",
+                                                  withConfiguration: UIImage.SymbolConfiguration(scale: .large))
+            button.configuration?.imagePlacement = .trailing
+            button.configuration?.imagePadding = 8.0
+            button.layer.cornerRadius = 15
+            button.layer.masksToBounds = true
+            button.translatesAutoresizingMaskIntoConstraints = false
+        } else {
+            button.setTitle("Новый список", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
+            button.layer.backgroundColor = UIColor.systemBlue.cgColor
+            button.layer.cornerRadius = 15
+            button.layer.masksToBounds = true
+            button.translatesAutoresizingMaskIntoConstraints = false
+        }
         return button
     }()
     
@@ -63,7 +70,7 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         //addButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
@@ -115,9 +122,11 @@ class GroupListViewController: UIViewController, GroupListViewControllerProtocol
     
     func setupValueCell() {
         groupList = [GroupListModel(nameGroup: "HomeTODO", numberTasks: "10", colorCell: nil),
-                     GroupListModel(nameGroup: "Gym", numberTasks: "5", colorCell: nil, taskList: [TaskModel(taskName: "Bench Press"),
-                                                                                                   TaskModel(taskName: "Bench Press"),
-                                                                                                   TaskModel(taskName: "Bench Press"), TaskModel(taskName: "Bench Press"), TaskModel(taskName: "Bench Press")]),
+                     GroupListModel(nameGroup: "Gym", numberTasks: "5", colorCell: nil, taskList: [TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
+                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
+                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
+                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
+                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff")]),
                      GroupListModel(nameGroup: "Shop", numberTasks: "2", colorCell: nil),
                      GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil),
                      GroupListModel(nameGroup: "Работа", numberTasks: "11", colorCell: nil),
