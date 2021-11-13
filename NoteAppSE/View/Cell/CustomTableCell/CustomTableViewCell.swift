@@ -19,8 +19,23 @@ class CustomTableViewCell: UITableViewCell {
     
     var delegate: MyCellDelegate?
     var radioButtonTap: Bool = false
+
     override func awakeFromNib() {
+       // setupEmptyRadioButton()
         super.awakeFromNib()
+    }
+    
+    func setupEmptyRadioButton() {
+        radioButton.layer.cornerRadius = 5
+        radioButton.layer.borderWidth = 1
+        radioButton.layer.borderColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
+        radioButton.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
+    func setupFullRadioButton() {
+        radioButton.layer.cornerRadius = 5
+        radioButton.layer.backgroundColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
