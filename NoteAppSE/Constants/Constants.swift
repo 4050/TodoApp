@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 enum Image {
     static let gearshape: String = "gearshape"
@@ -19,5 +18,4 @@ enum Colors {
     static let redColor = "#ff2d55"
     static let purpleColor = "#af52de"
     static let darkColor = "#000000"
-    
 }

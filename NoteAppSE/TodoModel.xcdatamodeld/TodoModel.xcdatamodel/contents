@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Group" representedClassName="Group" syncable="YES">
+        <attribute name="colorGroup" optional="YES" attributeType="String"/>
+        <attribute name="nameGroup" optional="YES" attributeType="String"/>
+        <attribute name="numberTasks" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="taskList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="groupTask" inverseEntity="Task"/>
+    </entity>
+    <entity name="Task" representedClassName="Task" syncable="YES">
+        <attribute name="colorTask" optional="YES" attributeType="String"/>
+        <attribute name="completedTask" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="nameTask" optional="YES" attributeType="String"/>
+        <relationship name="groupTask" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="taskList" inverseEntity="Group"/>
+    </entity>
+    <elements>
+        <element name="Group" positionX="-840.7606201171875" positionY="-108.4676513671875" width="128" height="103"/>
+        <element name="Task" positionX="-375.820556640625" positionY="-68.72073364257812" width="128" height="103"/>
+    </elements>
+</model>

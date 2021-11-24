@@ -13,11 +13,14 @@ protocol GroupListViewControllerProtocol: AnyObject {
 
 class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    private var groupList: [GroupListModel]?
+    private var groupList: [Group]?
+    private var categoryModel = CategoryModel()
     private var tableView = UITableView()
     private var dateService = DateService()
     private var color: UIColor?
+    private var storageService = StorageService()
 
+    
     private let addButton: UIButton = {
         let button = UIButton()
         if #available(iOS 15.0, *) {
@@ -42,18 +45,13 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
     }()
 
     override func viewDidLoad() {
-        tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.addSubview(tableView)
         setNavigationBar()
         setupTableView()
+        view.addSubview(tableView)
         view.addSubview(addButton)
-        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        addButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        setupLayout()
         setupValueCell()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,13 +67,24 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         navigationController.modalPresentationStyle = .automatic
         present(navigationController, animated: true)
     }
-
-    func setupTableView() {
+    
+    private func setupLayout() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+
+    func setupTableView() {
+        tableView = UITableView(frame: .zero, style: .insetGrouped)
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(CustomCollectionViewCell.nib, forCellReuseIdentifier:  CustomCollectionViewCell.identifier)
     }
 
@@ -111,6 +120,8 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         case .apply:
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(didTapApply))
             navigationItem.rightBarButtonItem?.tintColor = .black
+        case .save:
+            break
         }
     }
 
@@ -137,32 +148,28 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func setupValueCell() {
-        groupList = [GroupListModel(nameGroup: "HomeTODO", numberTasks: "10", colorCell: nil),
-                     GroupListModel(nameGroup: "Gym", numberTasks: "5", colorCell: nil, taskList: [TaskModel(taskName: "Bench Press", colorCell: "#9992ff", completedTask: false),
-                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
-                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
-                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
-                                                                                                   TaskModel(taskName: "Bench Press", colorCell: "#9992ff"),
-                                                                                                  ]),
-                     GroupListModel(nameGroup: "Shop", numberTasks: "2", colorCell: nil, taskList: [TaskModel(taskName: "Milk", colorCell: "#9992ff", completedTask: false)]),
-                     GroupListModel(nameGroup: "Work", numberTasks: "11", colorCell: nil, taskList: []),
-                     GroupListModel(nameGroup: "Работа", numberTasks: "11", colorCell: nil, taskList: []),
-                     GroupListModel(nameGroup: "HomeTODO", numberTasks: nil, colorCell: nil, taskList: []),
-                     GroupListModel(nameGroup: "`12`", numberTasks: nil, colorCell: "#9992ff", taskList: [])
-        ]
+        groupList = StorageService.shared.getGroupTasks()
+        //groupList = categoryModel.getCategoryList()
     }
     
-    func addGroupToGroupList(group: GroupListModel) {
-        groupList?.append(group)
+    func addGroupToGroupList(category: CategoryModel) {
+        StorageService.shared.saveGroupTasks(category: category)
+        //categoryModel.saveGroup(category: category)
+        setupValueCell()
         tableView.reloadData()
     }
     
     func passData(index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "TodoListTableViewController") as? TodoListTableViewController else { return }
-        vc.groupList = groupList![index]
-        vc.taskList = groupList![index].taskList
-        vc.selectColor = UIColor(hex: groupList![index].colorCell ?? "#9992ff")
+        vc.groupList = groupList?[index]
+        //vc.taskList = groupList![index].taskList?.allObjects as? [TaskModel]
+        if let indexPath = tableView.indexPathForSelectedRow {
+            vc.selectedCategory = groupList?[indexPath.row]
+            print("SELECTEDCATEGORY\(groupList?[indexPath.row])")
+        }
+
+        vc.selectColor = UIColor(hex: groupList![index].colorGroup ?? "#9992ff")
         navigationController?.pushViewController(vc, animated: true)
     }
     

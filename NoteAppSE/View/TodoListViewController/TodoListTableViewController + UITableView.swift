@@ -10,14 +10,16 @@ import UIKit
 
 extension TodoListTableViewController {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskList?.count ?? 0
+        return taskLists.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        let color = UIColor(hex: taskList![indexPath.row].colorCell ?? "")
-        cell.taskName.text = taskList![indexPath.row].taskName
+        let color = UIColor(hex: taskLists[indexPath.row].colorTask ?? "")
+
+        cell.taskName.text = taskLists[indexPath.row].nameTask
         cell.customColor = color
+        cell.taskName.tag = indexPath.row
         if cell.radioButtonTap == false {
             cell.setupEmptyRadioButton()
         }
@@ -25,7 +27,6 @@ extension TodoListTableViewController {
         cell.layer.masksToBounds = true
         cell.selectionStyle = .none
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

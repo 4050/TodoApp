@@ -15,6 +15,8 @@ class AddTaskViewController: UITableViewController {
     var selectColor: String?
     var checkmarkIndex: Int?
     
+    var selectedCategory: Group?
+    
     var todoListTableViewController: TodoListTableViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +41,7 @@ class AddTaskViewController: UITableViewController {
         let task: String = textField.text ?? "Empty"
         let color: String = selectColor ?? UIColor.systemBlue.toHexString()
         let taskModel = TaskModel(taskName: task, colorCell: color, completedTask: false)
-        todoListTableViewController?.addTaskToTaskList(task: taskModel)
+        todoListTableViewController?.addTaskToTaskList(taskModel: taskModel)
         dismiss(animated: true, completion: nil)
     }
     
