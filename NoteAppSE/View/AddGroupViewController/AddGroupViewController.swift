@@ -38,9 +38,8 @@ class AddGroupViewController: UITableViewController {
     
     @objc func addTapped() {
         let nameGroup: String = textField.text ?? "Empty"
-        let groupModel = GroupListModel(nameGroup: nameGroup, numberTasks: nil, colorCell: selectColor, taskList: [])
-
-        taskGroupsListTableViewController?.addGroupToGroupList(group: groupModel)
+        let groupModel = CategoryModel(nameCategory: nameGroup, numberTasks: nil, colorCategory: selectColor)
+        taskGroupsListTableViewController?.addGroupToGroupList(category: groupModel)
         dismiss(animated: true, completion: nil)
     }
 

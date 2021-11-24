@@ -8,21 +8,26 @@
 import UIKit
 
 protocol MyCellDelegate {
-       func didTapButtonInCell(_ cell: CustomTableViewCell)
+    func didTapButtonInCell(_ cell: CustomTableViewCell)
+    func didTextFieldShouldBeginEditing(_ cell: CustomTableViewCell)
+    func didTextFieldShouldEndEditing(_ cell: CustomTableViewCell)
    }
 
-class CustomTableViewCell: UITableViewCell {
+class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var taskName: UITextField!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var radioButton: UIButton!
-    
+    var tableViewController: TodoListTableViewController?
     var customColor: UIColor?
     
     var delegate: MyCellDelegate?
     var radioButtonTap: Bool = false
 
     override func awakeFromNib() {
+        taskName.addTarget(self, action: #selector(didTextFieldShouldBeginEditing), for: .editingDidBegin)
+        taskName.addTarget(self, action: #selector(didTextFieldShouldEndEditing), for: .editingDidEnd)
+        taskName.delegate = self
         super.awakeFromNib()
     }
     
@@ -48,6 +53,14 @@ class CustomTableViewCell: UITableViewCell {
     
     class var nib: UINib {
         return UINib(nibName: identifier, bundle: nil)
+    }
+    
+    @objc func didTextFieldShouldBeginEditing() {
+        delegate?.didTextFieldShouldBeginEditing(self)
+    }
+    
+    @objc func didTextFieldShouldEndEditing() {
+        delegate?.didTextFieldShouldEndEditing(self)
     }
     
     @IBAction func radioButtonTap(_ sender: UIButton) {
