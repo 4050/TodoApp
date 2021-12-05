@@ -1,23 +1,21 @@
 //
-//  AddTaskViewController.swift
+//  AddGroupViewController.swift
 //  NoteAppSE
 //
-//  Created by Stanislav on 19.09.2021.
+//  Created by Stanislav on 24.10.2021.
 //
 
 import UIKit
 
-class AddTaskViewController: UITableViewController {
+class AddGroupViewController: UITableViewController {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var colorView: UIView!
-    
+
     var selectColor: String?
     var checkmarkIndex: Int?
+    var taskGroupsListTableViewController: TaskGroupsListViewController?
     
-    var selectedCategory: Group?
-    
-    var todoListTableViewController: TodoListTableViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dismissKeyboard()
@@ -29,7 +27,7 @@ class AddTaskViewController: UITableViewController {
         appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         
-        title = "Новая задача"
+        title = "Новый список"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = UIColor(hex: Colors.darkColor)
         navigationController?.navigationBar.backItem?.title = ""
@@ -38,27 +36,27 @@ class AddTaskViewController: UITableViewController {
     }
     
     @objc func addTapped() {
-        let task: String = textField.text ?? "Empty"
-        let color: String = selectColor ?? UIColor.systemBlue.toHexString()
-        let taskModel = TaskModel(taskName: task, colorCell: color, completedTask: false)
-        todoListTableViewController?.addTaskToTaskList(taskModel: taskModel)
+        let nameGroup: String = textField.text ?? "Empty"
+        let groupModel = CategoryModel(nameCategory: nameGroup, numberTasks: nil, colorCategory: selectColor)
+        taskGroupsListTableViewController?.addGroupToGroupList(category: groupModel)
         dismiss(animated: true, completion: nil)
     }
+
     
     func selectCellColor(indexPath: IndexPath) {
         if tableView.cellForRow(at: indexPath) != nil {
             switch indexPath {
             case IndexPath(row: 0, section: 1):
-                checkmarkIndex = indexPath.row
+                checkmarkIndex = 0
                 return selectColor = UIColor.systemGreen.toHexString()
             case IndexPath(row: 1, section: 1):
-                checkmarkIndex = indexPath.row
+                checkmarkIndex = 1
                 return selectColor = UIColor.systemRed.toHexString()
             case IndexPath(row: 2, section: 1):
-                checkmarkIndex = indexPath.row
+                checkmarkIndex = 2
                 return selectColor = UIColor.systemBlue.toHexString()
             case IndexPath(row: 3, section: 1):
-                checkmarkIndex = indexPath.row
+                checkmarkIndex = 3
                 return selectColor = UIColor.systemYellow.toHexString()
             default:
                 return selectColor = UIColor.systemGray.toHexString()
@@ -77,5 +75,5 @@ class AddTaskViewController: UITableViewController {
             selectCellColor(indexPath: indexPath)
         }
     }
-}
 
+}

@@ -11,26 +11,32 @@ import UIKit
 enum BarButtonItem {
     case menu
     case apply
+    case save
 }
 
-class TodoListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TodoListTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var groupList: GroupListModel?
-    var taskList: [TaskModel]?
+    var groupList: Group?
+    var taskLists = [Task]()
+    var taskListModel = TaskModel()
+    var tableViewCell = CustomTableViewCell()
     var tableView = UITableView()
+    var selectColor: UIColor?
     
-    var color: UIColor?
+    var selectedCategory: Group? {
+        didSet {
+            loadTask()
+        }
+    }
     
     private let addButton: UIButton = {
         let button = UIButton()
         let boldLargeConfig = UIImage.SymbolConfiguration(pointSize: UIFont.systemFontSize, weight: .bold, scale: .large)
         let smallConfig = UIImage.SymbolConfiguration(scale: .large)
         let boldSmallConfig = boldLargeConfig.applying(smallConfig)
-        //button.setImage(UIImage(systemName: "plus", withConfiguration: boldSmallConfig), for: UIControl.State.normal)
         button.setTitle("Новая задача", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
-        button.layer.backgroundColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 5, height: 5)
@@ -48,10 +54,17 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
         view.addSubview(tableView)
         setupTableView()
         view.addSubview(addButton)
+        addButton.backgroundColor = selectColor
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 160).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        setupNavigationBar()
     }
     
     @objc func tapAddButton() {
@@ -59,12 +72,17 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
         let vc = storyBoard.instantiateViewController(withIdentifier: "AddTaskViewController") as! AddTaskViewController
         let navigationController = UINavigationController(rootViewController: vc)
         vc.todoListTableViewController = self
+        vc.selectedCategory = selectedCategory
         navigationController.modalPresentationStyle = .automatic
         present(navigationController, animated: true)
     }
     
+    func loadTask() {
+        let task = selectedCategory?.taskList?.allObjects as? [Task]
+        taskLists = task!
+    }
+    
     func setupTableView() {
-        //tableView.backgroundColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
         tableView.separatorColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -78,20 +96,18 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
         title = groupList?.nameGroup
         
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)]
-        appearance.largeTitleTextAttributes = [.foregroundColor: #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)]
+        appearance.titleTextAttributes = [.foregroundColor: selectColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: selectColor]
         
         navigationItem.standardAppearance = appearance
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.1710649792, green: 0.6276985593, blue: 1, alpha: 1)
+        navigationController?.navigationBar.tintColor = selectColor
         navigationController?.navigationBar.backItem?.title = ""
         navigationController?.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         setupRightBarButtonItem(buttonItem: .menu)
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(didTapSort))
-        
     }
     
     func setupContextMenu() -> UIMenu {
@@ -107,112 +123,92 @@ class TodoListTableViewController: UIViewController, UITableViewDelegate, UITabl
         case .menu:
             navigationItem.rightBarButtonItem = UIBarButtonItem(image:  UIImage(systemName: "gearshape"), menu: setupContextMenu())
         case .apply:
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(tap))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(didTapApply))
+        case .save:
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(didTapSave))
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-    
-    func selectColor(color: UIColor) {
-        self.color = color
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskList?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        cell.taskName.text = taskList![indexPath.row].taskName
-        let color = UIColor(hex: taskList![indexPath.row].colorCell ?? "")
-        cell.customColor = color
-        if cell.radioButtonTap == false {
-            cell.setupEmptyRadioButton()
-        }
-        cell.delegate = self
-        cell.layer.masksToBounds = true
-        cell.selectionStyle = .none
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50.0;
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            taskList?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-    -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
-            self.taskList?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            completionHandler(true)
-        }
-        deleteAction.image = UIImage(systemName: "trash")
-        deleteAction.backgroundColor = .systemRed
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        return configuration
-    }
-    
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        taskList?.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
     
     func didTapSort() {
-        UIView.animate(withDuration: 0.2,
-                       delay: 0.1,
+        UIView.animate(withDuration: 0.17,
+                       delay: 0.0,
                        options: .curveEaseOut,
                        animations: { [weak self] in
             self!.tableView.isEditing = true
             self!.setupRightBarButtonItem(buttonItem: .apply)
-            self!.addButton.isHidden = true
+            self!.addButton.alpha = 0
         }, completion: nil)
     }
     
-    @objc func tap() {
-        UIView.animate(withDuration: 0.2,
-                       delay: 0.1,
+    @objc func didTapApply() {
+        UIView.animate(withDuration: 0.17,
+                       delay: 0.0,
                        options: .curveEaseIn,
                        animations: { [weak self] in
             self!.tableView.isEditing = false
             self!.setupRightBarButtonItem(buttonItem: .menu)
-            self!.addButton.isHidden = false
+            self!.addButton.alpha = 1
         }, completion: nil)
     }
     
-    func addTaskToTaskList(task: TaskModel) {
-        taskList?.append(task)
+    @objc func didTapSave()  {
+        UIView.animate(withDuration: 0.17,
+                       delay: 0.0,
+                       options: .curveEaseIn,
+                       animations: { [weak self] in
+            self?.addButton.alpha = 1
+            guard let tableViewCell = self?.tableViewCell else { return }
+            self?.setupRightBarButtonItem(buttonItem: .menu)
+            self?.didTextFieldShouldEndEditing(tableViewCell)
+        }, completion: nil)
+    }
+    
+    func addTaskToTaskList(taskModel: TaskModel) {
+        let taskName: String = taskModel.taskName ?? "default"
+        let colorCell: String = taskModel.colorCell ?? Colors.darkColor
+        let completed: Bool = taskModel.completedTask ?? false
+        let parentCategory: Group = selectedCategory!
+        taskListModel.saveTask(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory)
+        loadTask()
         tableView.reloadData()
     }
 }
 
+
 extension TodoListTableViewController: MyCellDelegate {
+    
+    func didTextFieldShouldEndEditing(_ cell: CustomTableViewCell) {
+        setupRightBarButtonItem(buttonItem: .menu)
+        cell.taskName.resignFirstResponder()
+    }
+    
+    func didTextFieldShouldBeginEditing(_ cell: CustomTableViewCell) {
+        setupRightBarButtonItem(buttonItem: .save)
+        tableViewCell = cell
+        UIView.animate(withDuration: 0.17,
+                       delay: 0.0,
+                       options: .curveEaseIn,
+                       animations: { [weak self] in
+            self?.addButton.alpha = 0
+        }, completion: nil)
+    }
+    
     func didTapButtonInCell(_ cell: CustomTableViewCell) {
-        if cell.radioButtonTap {
-            cell.radioButtonTap = false
+        guard let indexPath = self.tableView.indexPath(for: cell) else {return}
+        if taskLists[indexPath.row].completedTask {
             cell.taskName.isUserInteractionEnabled = true
             cell.setupEmptyRadioButton()
-            //cell.radioButton.setImage(#imageLiteral(resourceName: "emptyRectangle"), for: .normal)
             cell.taskName.alpha = 1
+            taskLists[indexPath.row].completedTask = false
+            taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
+                                     parameter: .completedTask)
         } else {
             cell.taskName.isUserInteractionEnabled = false
-            cell.radioButtonTap = true
             cell.setupFullRadioButton()
-            //cell.radioButton.setImage(#imageLiteral(resourceName: "fullRectangle"), for: .normal)
             cell.taskName.alpha = 0.5
+            taskLists[indexPath.row].completedTask = true
+            taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
+                                     parameter: .completedTask)
         }
     }
 }
