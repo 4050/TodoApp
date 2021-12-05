@@ -16,7 +16,6 @@ class CustomCollectionViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
 
     class var identifier: String {

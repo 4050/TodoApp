@@ -22,25 +22,12 @@ class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
     var customColor: UIColor?
     
     var delegate: MyCellDelegate?
-    var radioButtonTap: Bool = false
 
     override func awakeFromNib() {
         taskName.addTarget(self, action: #selector(didTextFieldShouldBeginEditing), for: .editingDidBegin)
         taskName.addTarget(self, action: #selector(didTextFieldShouldEndEditing), for: .editingDidEnd)
         taskName.delegate = self
         super.awakeFromNib()
-    }
-    
-    func setupEmptyRadioButton() {
-        radioButton.layer.cornerRadius = 5
-        radioButton.layer.borderWidth = 1
-        radioButton.layer.borderColor = customColor?.cgColor
-        radioButton.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    }
-    
-    func setupFullRadioButton() {
-        radioButton.layer.cornerRadius = 5
-        radioButton.layer.backgroundColor = customColor?.cgColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -53,6 +40,18 @@ class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     class var nib: UINib {
         return UINib(nibName: identifier, bundle: nil)
+    }
+    
+    func setupEmptyRadioButton() {
+        radioButton.layer.cornerRadius = 10
+        radioButton.layer.borderWidth = 1
+        radioButton.layer.borderColor = customColor?.cgColor
+        radioButton.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
+    func setupFullRadioButton() {
+        radioButton.layer.cornerRadius = 10
+        radioButton.layer.backgroundColor = customColor?.cgColor
     }
     
     @objc func didTextFieldShouldBeginEditing() {

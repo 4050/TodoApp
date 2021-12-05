@@ -49,16 +49,16 @@ class AddTaskViewController: UITableViewController {
         if tableView.cellForRow(at: indexPath) != nil {
             switch indexPath {
             case IndexPath(row: 0, section: 1):
-                checkmarkIndex = 0
+                checkmarkIndex = indexPath.row
                 return selectColor = UIColor.systemGreen.toHexString()
             case IndexPath(row: 1, section: 1):
-                checkmarkIndex = 1
+                checkmarkIndex = indexPath.row
                 return selectColor = UIColor.systemRed.toHexString()
             case IndexPath(row: 2, section: 1):
-                checkmarkIndex = 2
+                checkmarkIndex = indexPath.row
                 return selectColor = UIColor.systemBlue.toHexString()
             case IndexPath(row: 3, section: 1):
-                checkmarkIndex = 3
+                checkmarkIndex = indexPath.row
                 return selectColor = UIColor.systemYellow.toHexString()
             default:
                 return selectColor = UIColor.systemGray.toHexString()

@@ -17,7 +17,6 @@ enum BarButtonItem {
 class TodoListTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var groupList: Group?
-    var taskList: [Task]?
     var taskLists = [Task]()
     var taskListModel = TaskModel()
     var tableViewCell = CustomTableViewCell()
@@ -80,7 +79,6 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     
     func loadTask() {
         let task = selectedCategory?.taskList?.allObjects as? [Task]
-        
         taskLists = task!
     }
     
@@ -170,9 +168,7 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         let colorCell: String = taskModel.colorCell ?? Colors.darkColor
         let completed: Bool = taskModel.completedTask ?? false
         let parentCategory: Group = selectedCategory!
-        //let task = Task(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory)
-        StorageService.shared.saveTask(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory)
-        //taskListModel.saveTask(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory)
+        taskListModel.saveTask(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory)
         loadTask()
         tableView.reloadData()
     }
@@ -198,16 +194,21 @@ extension TodoListTableViewController: MyCellDelegate {
     }
     
     func didTapButtonInCell(_ cell: CustomTableViewCell) {
-        if cell.radioButtonTap {
-            cell.radioButtonTap = false
+        guard let indexPath = self.tableView.indexPath(for: cell) else {return}
+        if taskLists[indexPath.row].completedTask {
             cell.taskName.isUserInteractionEnabled = true
             cell.setupEmptyRadioButton()
             cell.taskName.alpha = 1
+            taskLists[indexPath.row].completedTask = false
+            taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
+                                     parameter: .completedTask)
         } else {
             cell.taskName.isUserInteractionEnabled = false
-            cell.radioButtonTap = true
             cell.setupFullRadioButton()
             cell.taskName.alpha = 0.5
+            taskLists[indexPath.row].completedTask = true
+            taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
+                                     parameter: .completedTask)
         }
     }
 }

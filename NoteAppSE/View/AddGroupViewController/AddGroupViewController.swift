@@ -16,7 +16,6 @@ class AddGroupViewController: UITableViewController {
     var checkmarkIndex: Int?
     var taskGroupsListTableViewController: TaskGroupsListViewController?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dismissKeyboard()
@@ -28,7 +27,7 @@ class AddGroupViewController: UITableViewController {
         appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         
-        title = "Новая задача"
+        title = "Новый список"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = UIColor(hex: Colors.darkColor)
         navigationController?.navigationBar.backItem?.title = ""
