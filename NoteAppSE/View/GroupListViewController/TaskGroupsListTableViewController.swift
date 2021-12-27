@@ -11,7 +11,7 @@ protocol GroupListViewControllerProtocol: AnyObject {
     func passData(index: Int)
 }
 
-class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TaskGroupsListViewController: UIViewController {
     
     var groupList: [Group]?
     var categoryModel = CategoryModel()
@@ -85,7 +85,7 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(CustomCollectionViewCell.nib, forCellReuseIdentifier:  CustomCollectionViewCell.identifier)
+        tableView.register(CustomCategoryTableViewCell.nib, forCellReuseIdentifier: CustomCategoryTableViewCell.identifier)
     }
 
     func setNavigationBar() {

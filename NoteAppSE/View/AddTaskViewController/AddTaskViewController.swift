@@ -7,10 +7,16 @@
 
 import UIKit
 
-class AddTaskViewController: UITableViewController {
+class AddTaskViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    @IBOutlet weak var collectionColorView: UICollectionView!
+    @IBOutlet weak var colorTableCell: UITableViewCell!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var colorView: UIView!
+    
+    var cellDelegate: CustomColorCollectionViewCellDelegate?
+    
+    var colors: [UIColor] = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemBlue, UIColor.systemYellow]
     
     var selectColor: String?
     var checkmarkIndex: Int?
@@ -22,8 +28,13 @@ class AddTaskViewController: UITableViewController {
         super.viewDidLoad()
         self.dismissKeyboard()
         setupNavigationBar()
+        self.collectionColorView.dataSource = self
+        self.collectionColorView.delegate = self
+        
+        let cellNib = UINib(nibName: "CustomColorCollectionViewCell", bundle: nil)
+        self.collectionColorView.register(cellNib, forCellWithReuseIdentifier: "CustomColorCollectionViewCell")
     }
-    
+
     func setupNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
@@ -74,8 +85,49 @@ class AddTaskViewController: UITableViewController {
             let indexPathCheckmark = IndexPath(row: checkmarkIndex ?? 0, section: 1)
             tableView.cellForRow(at: indexPathCheckmark)?.accessoryType = .none
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            selectCellColor(indexPath: indexPath)
+            //selectCellColor(indexPath: indexPath)
         }
+    }
+
+}
+
+extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
+    
+    func collectionView(collectionviewcell: CustomColorCollectionViewCell?, index: Int, didTappedInTableViewCell: UITableViewCell) {
+    }
+
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colors.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomColorCollectionViewCell", for: indexPath) as! CustomColorCollectionViewCell
+            cell.delegate = self
+            cell.customColor = colors[indexPath.row]
+        if !cell.checkmark {
+            cell.setupEmptyImageView()
+        }
+            return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+           let cell = collectionView.cellForItem(at: indexPath) as? CustomColorCollectionViewCell
+        cell?.setupFullImageView()
+        selectColor = colors[indexPath.row].toHexString()
+        print(colors[indexPath.row])
+        cell?.checkmark = true
+        print(indexPath.row)
+       }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? CustomColorCollectionViewCell
+        cell?.setupEmptyImageView()
+        cell?.checkmark = false
     }
 }
 

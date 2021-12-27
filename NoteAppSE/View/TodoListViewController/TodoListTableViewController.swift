@@ -202,6 +202,7 @@ extension TodoListTableViewController: MyCellDelegate {
             taskLists[indexPath.row].completedTask = false
             taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
                                      parameter: .completedTask)
+            didTextFieldShouldEndEditing(cell)
         } else {
             cell.taskName.isUserInteractionEnabled = false
             cell.setupFullRadioButton()

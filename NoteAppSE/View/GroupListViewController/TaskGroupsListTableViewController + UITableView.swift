@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension TaskGroupsListViewController {
+extension TaskGroupsListViewController: UITableViewDataSource {
     
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -16,7 +16,7 @@ extension TaskGroupsListViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CustomCategoryTableViewCell.identifier, for: indexPath) as! CustomCategoryTableViewCell
         cell.sheetNameLabel.text = groupList![indexPath.row].nameGroup
         return cell
         
@@ -65,4 +65,8 @@ extension TaskGroupsListViewController {
         categoryModel.deleteCategory(category: category)
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
+}
+
+extension TaskGroupsListViewController: UITableViewDelegate {
+    
 }

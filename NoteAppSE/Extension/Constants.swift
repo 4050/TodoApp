@@ -10,6 +10,9 @@ import Foundation
 enum Image {
     static let gearshape: String = "gearshape"
     static let imgBackArrow: String = "asturnleft"
+    static let circle: String = "circle"
+    static let circleFill: String = "circle.fill"
+    static let checkmarkCircleFill: String = "checkmark.circle.fill"
 }
 
 enum Colors {
