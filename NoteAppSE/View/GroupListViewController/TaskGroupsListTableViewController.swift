@@ -85,6 +85,8 @@ class TaskGroupsListViewController: UIViewController {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.backgroundView = UIImageView(image: UIImage(named: "pencil.circle.fill"))
         tableView.register(CustomCategoryTableViewCell.nib, forCellReuseIdentifier: CustomCategoryTableViewCell.identifier)
     }
 

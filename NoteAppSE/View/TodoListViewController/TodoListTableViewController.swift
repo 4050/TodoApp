@@ -73,8 +73,11 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         let navigationController = UINavigationController(rootViewController: vc)
         vc.todoListTableViewController = self
         vc.selectedCategory = selectedCategory
-        navigationController.modalPresentationStyle = .automatic
-        present(navigationController, animated: true)
+        navigationController.modalPresentationStyle = .pageSheet
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        present(navigationController, animated: true, completion: nil)
     }
     
     func loadTask() {

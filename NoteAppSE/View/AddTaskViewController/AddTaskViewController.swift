@@ -16,7 +16,7 @@ class AddTaskViewController: UITableViewController, UICollectionViewDataSource, 
     
     var cellDelegate: CustomColorCollectionViewCellDelegate?
     
-    var colors: [UIColor] = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemBlue, UIColor.systemYellow]
+    var colors: [UIColor] = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemBlue, UIColor.systemYellow, UIColor.systemPink, UIColor.systemOrange]
     
     var selectColor: String?
     var checkmarkIndex: Int?
@@ -30,7 +30,6 @@ class AddTaskViewController: UITableViewController, UICollectionViewDataSource, 
         setupNavigationBar()
         self.collectionColorView.dataSource = self
         self.collectionColorView.delegate = self
-        
         let cellNib = UINib(nibName: "CustomColorCollectionViewCell", bundle: nil)
         self.collectionColorView.register(cellNib, forCellWithReuseIdentifier: "CustomColorCollectionViewCell")
     }
@@ -55,40 +54,6 @@ class AddTaskViewController: UITableViewController, UICollectionViewDataSource, 
         todoListTableViewController?.addTaskToTaskList(taskModel: taskModel)
         dismiss(animated: true, completion: nil)
     }
-    
-    func selectCellColor(indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath) != nil {
-            switch indexPath {
-            case IndexPath(row: 0, section: 1):
-                checkmarkIndex = indexPath.row
-                return selectColor = UIColor.systemGreen.toHexString()
-            case IndexPath(row: 1, section: 1):
-                checkmarkIndex = indexPath.row
-                return selectColor = UIColor.systemRed.toHexString()
-            case IndexPath(row: 2, section: 1):
-                checkmarkIndex = indexPath.row
-                return selectColor = UIColor.systemBlue.toHexString()
-            case IndexPath(row: 3, section: 1):
-                checkmarkIndex = indexPath.row
-                return selectColor = UIColor.systemYellow.toHexString()
-            default:
-                return selectColor = UIColor.systemGray.toHexString()
-            }
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-            selectColor = nil
-        } else {
-            let indexPathCheckmark = IndexPath(row: checkmarkIndex ?? 0, section: 1)
-            tableView.cellForRow(at: indexPathCheckmark)?.accessoryType = .none
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            //selectCellColor(indexPath: indexPath)
-        }
-    }
-
 }
 
 extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
@@ -112,7 +77,7 @@ extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        return UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 5)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
