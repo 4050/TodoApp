@@ -25,18 +25,18 @@ class TaskGroupsListViewController: UIViewController {
         let button = UIButton()
         if #available(iOS 15.0, *) {
             button.setTitle("Новый список", for: .normal)
-            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
             button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
             button.configuration = .filled()
-            button.configuration?.baseBackgroundColor = UIColor(hex: Colors.darkColor, alpha: 1.0)
+            button.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
             button.layer.cornerRadius = 15
             button.layer.masksToBounds = true
             button.translatesAutoresizingMaskIntoConstraints = false
         } else {
             button.setTitle("Новый список", for: .normal)
-            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
             button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
-            button.layer.backgroundColor = UIColor(hex: Colors.darkColor, alpha: 1.0).cgColor
+            button.layer.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
             button.layer.cornerRadius = 15
             button.layer.masksToBounds = true
             button.translatesAutoresizingMaskIntoConstraints = false

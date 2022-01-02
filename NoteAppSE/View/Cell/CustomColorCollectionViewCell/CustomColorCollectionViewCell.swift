@@ -41,20 +41,4 @@ class CustomColorCollectionViewCell: UICollectionViewCell {
         imageView.image = UIImage(systemName: Image.checkmarkCircleFill)
         imageView.tintColor = customColor
     }
-    
-    
-  // func setupEmptyRadioButton() {
-  //     radioButton.setBackgroundImage(UIImage(systemName: Image.circleFill), for: .normal)
-  //     radioButton.tintColor = customColor
-  // }
-  //
-  // func setupFullRadioButton() {
-  //     radioButton.setBackgroundImage(UIImage(systemName: Image.checkmarkCircleFill), for: .normal)
-  //     radioButton.tintColor = customColor
-  // }
-    
-  // @IBAction func radioButtonTap(_ sender: UIButton) {
-  //     delegate?.didTapButtonInCell(self)
-  // }
-    
 }
