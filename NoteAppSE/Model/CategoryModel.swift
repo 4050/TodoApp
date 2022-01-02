@@ -16,12 +16,16 @@ struct CategoryModel {
     var storageService = StorageService()
     
     func getCategoryList() -> [Group] {
-        let list = storageService.getGroupTasks()
+        let list = StorageService.shared.getGroupTasks()
         return list
     }
     
+    func deleteCategory(category: Group) {
+        StorageService.shared.deleteCategory(category: category)
+    }
+    
     func saveGroup(category: CategoryModel) {
-        storageService.saveGroupTasks(category: category)
+        StorageService.shared.saveGroupTasks(category: category)
     }
     
 }
@@ -46,8 +50,20 @@ struct TaskModel {
         return list
     }
     
+    func deleteTask(task: Task) {
+        StorageService.shared.deleteTask(task: task)
+    }
+    
     func saveTask(colorTask: String, completedTask: Bool, nameTask: String, groupTask: Group) {
-        storageService.saveTask(colorTask: colorTask, completedTask: completedTask, nameTask: nameTask, groupTask: groupTask)
+        StorageService.shared.saveTask(colorTask: colorTask, completedTask: completedTask, nameTask: nameTask, groupTask: groupTask)
+    }
+    
+  // func updateStateTask(completedTask: Bool) {
+  //     StorageService.shared.updateStateTask(completedTask: completedTask)
+  // }
+    
+    func updateTask(comletedTask: Bool, parameter: Parametеrs) {
+        StorageService.shared.updateTask(completedTask: completedTask, parameter: parameter)
     }
     
 }

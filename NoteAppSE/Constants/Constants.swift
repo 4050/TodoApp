@@ -19,3 +19,10 @@ enum Colors {
     static let purpleColor = "#af52de"
     static let darkColor = "#000000"
 }
+
+enum Parametеrs {
+        case colorTask
+        case completedTask
+        case nameTask
+        case groupTask
+}

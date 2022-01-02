@@ -13,12 +13,12 @@ protocol GroupListViewControllerProtocol: AnyObject {
 
 class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    private var groupList: [Group]?
-    private var categoryModel = CategoryModel()
-    private var tableView = UITableView()
-    private var dateService = DateService()
-    private var color: UIColor?
-    private var storageService = StorageService()
+    var groupList: [Group]?
+    var categoryModel = CategoryModel()
+    var tableView = UITableView()
+    var dateService = DateService()
+    var color: UIColor?
+    var storageService = StorageService()
 
     
     private let addButton: UIButton = {
@@ -148,13 +148,11 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func setupValueCell() {
-        groupList = StorageService.shared.getGroupTasks()
-        //groupList = categoryModel.getCategoryList()
+        groupList = categoryModel.getCategoryList()
     }
     
     func addGroupToGroupList(category: CategoryModel) {
-        StorageService.shared.saveGroupTasks(category: category)
-        //categoryModel.saveGroup(category: category)
+        categoryModel.saveGroup(category: category)
         setupValueCell()
         tableView.reloadData()
     }
@@ -163,10 +161,8 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "TodoListTableViewController") as? TodoListTableViewController else { return }
         vc.groupList = groupList?[index]
-        //vc.taskList = groupList![index].taskList?.allObjects as? [TaskModel]
         if let indexPath = tableView.indexPathForSelectedRow {
             vc.selectedCategory = groupList?[indexPath.row]
-            print("SELECTEDCATEGORY\(groupList?[indexPath.row])")
         }
 
         vc.selectColor = UIColor(hex: groupList![index].colorGroup ?? "#9992ff")
@@ -175,53 +171,5 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
     
     func setColor(_ color: String) -> UIColor {
         return UIColor(hex: color, alpha: 1.0)
-    }
-    
-    // MARK: - Table view data source
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupList?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
-        cell.sheetNameLabel.text = groupList![indexPath.row].nameGroup
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50.0;
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            groupList?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-    -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
-            self.groupList?.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            completionHandler(true)
-        }
-        deleteAction.image = UIImage(systemName: "trash")
-        deleteAction.backgroundColor = .systemRed
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        return configuration
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        passData(index: indexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        groupList?.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
 }
