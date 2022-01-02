@@ -10,6 +10,7 @@
 		8516EA5627788C660007B2B0 /* CustomColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8516EA5427788C660007B2B0 /* CustomColorCollectionViewCell.swift */; };
 		8516EA5727788C660007B2B0 /* CustomColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8516EA5527788C660007B2B0 /* CustomColorCollectionViewCell.xib */; };
 		8529008926888D9100299401 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8529008826888D9100299401 /* CategoryModel.swift */; };
+		852B8F3B278231EC007ED6FE /* Constants in Resources */ = {isa = PBXBuildFile; fileRef = 852B8F3A278231EC007ED6FE /* Constants */; };
 		854BE64C27182914007A1F14 /* TodoListTableViewController + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BE64B27182914007A1F14 /* TodoListTableViewController + UITableView.swift */; };
 		8583FDC5268C795A00BF7CA4 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8583FDC4268C795A00BF7CA4 /* DateService.swift */; };
 		8583FDC8268C904300BF7CA4 /* DateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8583FDC7268C904300BF7CA4 /* DateModel.swift */; };
@@ -61,6 +62,7 @@
 		8516EA5427788C660007B2B0 /* CustomColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8516EA5527788C660007B2B0 /* CustomColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		8529008826888D9100299401 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		852B8F3A278231EC007ED6FE /* Constants */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Constants; sourceTree = "<group>"; };
 		854BE64B27182914007A1F14 /* TodoListTableViewController + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoListTableViewController + UITableView.swift"; sourceTree = "<group>"; };
 		8583FDC4268C795A00BF7CA4 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		8583FDC7268C904300BF7CA4 /* DateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateModel.swift; sourceTree = "<group>"; };
@@ -159,13 +161,6 @@
 			path = CustomColorCollectionViewCell;
 			sourceTree = "<group>";
 		};
-		851A4AC026A03D52008EAE98 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		8529008726888D5200299401 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,8 +242,8 @@
 		85BC9B4B265C2C530025DBF8 /* NoteAppSE */ = {
 			isa = PBXGroup;
 			children = (
+				852B8F3A278231EC007ED6FE /* Constants */,
 				85A350D027417AC600402AB1 /* CoreData */,
-				851A4AC026A03D52008EAE98 /* Constants */,
 				859B92932692036B0010D832 /* Extension */,
 				85EC0C8C2689DD2300660349 /* Service */,
 				8529008726888D5200299401 /* Model */,
@@ -417,6 +412,7 @@
 				85BC9B56265C2C550025DBF8 /* Assets.xcassets in Resources */,
 				85BC9B54265C2C530025DBF8 /* Main.storyboard in Resources */,
 				8591F2AA26E14983001816A6 /* CustomCategoryTableViewCell.xib in Resources */,
+				852B8F3B278231EC007ED6FE /* Constants in Resources */,
 				85E5A118268E0A39004A8F1E /* CustomTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -53,6 +53,16 @@ class TaskGroupsListViewController: UIViewController {
         setupValueCell()
 
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+         super.traitCollectionDidChange(previousTraitCollection)
+
+         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+             addButton.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+             addButton.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
+             navigationItem.rightBarButtonItem?.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+         }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -64,8 +74,11 @@ class TaskGroupsListViewController: UIViewController {
         let vc = storyBoard.instantiateViewController(withIdentifier: "AddGroupViewController") as! AddGroupViewController
         let navigationController = UINavigationController(rootViewController: vc)
         vc.taskGroupsListTableViewController = self
-        navigationController.modalPresentationStyle = .automatic
-        present(navigationController, animated: true)
+        navigationController.modalPresentationStyle = .pageSheet
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        present(navigationController, animated: true, completion: nil)
     }
     
     private func setupLayout() {
@@ -118,10 +131,10 @@ class TaskGroupsListViewController: UIViewController {
         switch buttonItem {
         case .menu:
             navigationItem.rightBarButtonItem = UIBarButtonItem(image:  UIImage(systemName: "gearshape"), menu: setContextMenu())
-            navigationItem.rightBarButtonItem?.tintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
         case .apply:
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(didTapApply))
-            navigationItem.rightBarButtonItem?.tintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
         case .save:
             break
         }
