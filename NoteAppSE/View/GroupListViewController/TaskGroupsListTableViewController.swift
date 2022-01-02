@@ -105,7 +105,7 @@ class TaskGroupsListViewController: UIViewController {
 
     func setNavigationBar() {
         let currentDate = setCurrentDate()
-        title = currentDate
+        title = currentDate.capitalizingFirstLetter()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.isTranslucent = true

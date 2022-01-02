@@ -80,6 +80,15 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         present(navigationController, animated: true, completion: nil)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+         super.traitCollectionDidChange(previousTraitCollection)
+
+         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+             addButton.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+             addButton.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
+         }
+    }
+    
     func loadTask() {
         let task = selectedCategory?.taskList?.allObjects as? [Task]
         taskLists = task!
@@ -130,6 +139,7 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         case .save:
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(didTapSave))
         }
+        navigationItem.rightBarButtonItem?.tintColor = selectColor
     }
     
     func didTapSort() {
