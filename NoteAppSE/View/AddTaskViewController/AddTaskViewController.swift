@@ -7,31 +7,67 @@
 
 import UIKit
 
-class AddTaskViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class AddTaskViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate{
     
     @IBOutlet weak var collectionColorView: UICollectionView!
     @IBOutlet weak var colorTableCell: UITableViewCell!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var colorView: UIView!
+    @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var detailSwitcher: UISwitch!
+    @IBOutlet weak var detailViewCell: UITableViewCell!
     
     var cellDelegate: CustomColorCollectionViewCellDelegate?
     
     var colors: [UIColor] = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemBlue, UIColor.systemYellow, UIColor.systemOrange]
     
     var selectColor: String?
-    var checkmarkIndex: Int?
-    
     var selectedCategory: Group?
-    
     var todoListTableViewController: TodoListTableViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.dismissKeyboard()
+        setupCollectionViewCell()
         setupNavigationBar()
+        self.detailViewCell.isHidden = true
+        
+    }
+    
+    func setupCollectionViewCell() {
+        let cellNib = UINib(nibName: "CustomColorCollectionViewCell", bundle: nil)
         self.collectionColorView.dataSource = self
         self.collectionColorView.delegate = self
-        let cellNib = UINib(nibName: "CustomColorCollectionViewCell", bundle: nil)
         self.collectionColorView.register(cellNib, forCellWithReuseIdentifier: "CustomColorCollectionViewCell")
+    }
+    
+    @IBAction func switchCell(_ sender: UISwitch) {
+        if sender.isOn {
+            sender.isOn = true
+            UIView.animate(
+              withDuration: 1.5,
+              delay: 1,
+              usingSpringWithDamping: 0.7,
+              initialSpringVelocity: 0.8,
+              options: UIView.AnimationOptions.curveEaseInOut,
+              animations: {
+                  self.detailViewCell.isHidden = false
+                
+            }, completion: nil)
+        } else {
+            sender.isOn = false
+            UIView.animate(
+              withDuration: 1.5,
+              delay: 1,
+              usingSpringWithDamping: 0.7,
+              initialSpringVelocity: 0.8,
+              options: UIView.AnimationOptions.curveEaseInOut,
+              animations: {
+                  self.detailViewCell.isHidden = true
+            }, completion: nil)
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     func setupNavigationBar() {
@@ -65,7 +101,6 @@ extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
     func collectionView(collectionviewcell: CustomColorCollectionViewCell?, index: Int, didTappedInTableViewCell: UITableViewCell) {
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
     }
@@ -88,9 +123,7 @@ extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
         let cell = collectionView.cellForItem(at: indexPath) as? CustomColorCollectionViewCell
         cell?.setupFullImageView()
         selectColor = colors[indexPath.row].toHexString()
-        print(colors[indexPath.row])
         cell?.checkmark = true
-        print(indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -99,4 +132,3 @@ extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
         cell?.checkmark = false
     }
 }
-

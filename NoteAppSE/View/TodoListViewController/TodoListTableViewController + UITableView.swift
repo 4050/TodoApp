@@ -20,7 +20,6 @@ extension TodoListTableViewController {
         cell.taskName.text = taskLists[indexPath.row].nameTask
         cell.customColor = color
         cell.taskName.tag = indexPath.row
-        print(taskLists[indexPath.row].completedTask)
         if taskLists[indexPath.row].completedTask == true {
             cell.setupFullRadioButton()
             cell.taskName.alpha = 0.5
@@ -69,6 +68,17 @@ extension TodoListTableViewController {
         self.taskLists.remove(at: indexPath.row)
         taskListModel.deleteTask(task: task)
         tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        passData()
+    }
+    
+    func passData() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: "DetailTableViewController") as? DetailTableViewController else { return }
+        //vc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
