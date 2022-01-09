@@ -23,6 +23,8 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     var tableView = UITableView()
     var selectColor: UIColor?
     
+    var detailText: String? 
+    
     var selectedCategory: Group? {
         didSet {
             loadTask()
@@ -48,12 +50,13 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     }()
     
     override func viewDidLoad() {
+        setupNavigationBar()
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        setupTableView()
         view.addSubview(addButton)
+        setupTableView()
         addButton.backgroundColor = selectColor
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = true
@@ -64,7 +67,6 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        setupNavigationBar()
     }
     
     @objc func tapAddButton() {
@@ -73,14 +75,27 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         let navigationController = UINavigationController(rootViewController: vc)
         vc.todoListTableViewController = self
         vc.selectedCategory = selectedCategory
-        navigationController.modalPresentationStyle = .automatic
-        present(navigationController, animated: true)
+        navigationController.modalPresentationStyle = .pageSheet
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+         super.traitCollectionDidChange(previousTraitCollection)
+
+         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+             addButton.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+             addButton.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
+         }
     }
     
     func loadTask() {
         let task = selectedCategory?.taskList?.allObjects as? [Task]
         taskLists = task!
     }
+    
     
     func setupTableView() {
         tableView.separatorColor = .clear
@@ -127,6 +142,7 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         case .save:
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(didTapSave))
         }
+        navigationItem.rightBarButtonItem?.tintColor = selectColor
     }
     
     func didTapSort() {
@@ -202,6 +218,7 @@ extension TodoListTableViewController: MyCellDelegate {
             taskLists[indexPath.row].completedTask = false
             taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
                                      parameter: .completedTask)
+            didTextFieldShouldEndEditing(cell)
         } else {
             cell.taskName.isUserInteractionEnabled = false
             cell.setupFullRadioButton()

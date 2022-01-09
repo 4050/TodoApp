@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomCollectionViewCell: UITableViewCell {
+class CustomCategoryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var sheetNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!

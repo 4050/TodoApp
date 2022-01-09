@@ -58,10 +58,6 @@ struct TaskModel {
         StorageService.shared.saveTask(colorTask: colorTask, completedTask: completedTask, nameTask: nameTask, groupTask: groupTask)
     }
     
-  // func updateStateTask(completedTask: Bool) {
-  //     StorageService.shared.updateStateTask(completedTask: completedTask)
-  // }
-    
     func updateTask(comletedTask: Bool, parameter: Parametеrs) {
         StorageService.shared.updateTask(completedTask: completedTask, parameter: parameter)
     }

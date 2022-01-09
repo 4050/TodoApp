@@ -21,7 +21,7 @@ class DateService: DateServiceProtocol {
         let nameMonth = Calendar.current.monthSymbols
         let currentMonth: String = nameMonth[componentsFromCurrentDate.month! - 1]
         let currentDay: String = String(componentsFromCurrentDate.day!)
-        let currentDate = "\(currentMonth) \(currentDay)"
+        let currentDate = "\(currentDay) \(currentMonth)"
         return currentDate
     }
 }

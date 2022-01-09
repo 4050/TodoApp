@@ -11,7 +11,7 @@ protocol GroupListViewControllerProtocol: AnyObject {
     func passData(index: Int)
 }
 
-class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TaskGroupsListViewController: UIViewController {
     
     var groupList: [Group]?
     var categoryModel = CategoryModel()
@@ -25,18 +25,18 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         let button = UIButton()
         if #available(iOS 15.0, *) {
             button.setTitle("Новый список", for: .normal)
-            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
             button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
             button.configuration = .filled()
-            button.configuration?.baseBackgroundColor = UIColor(hex: Colors.darkColor, alpha: 1.0)
+            button.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
             button.layer.cornerRadius = 15
             button.layer.masksToBounds = true
             button.translatesAutoresizingMaskIntoConstraints = false
         } else {
             button.setTitle("Новый список", for: .normal)
-            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
             button.addTarget(self, action: #selector(tapAddButton), for: .touchUpInside)
-            button.layer.backgroundColor = UIColor(hex: Colors.darkColor, alpha: 1.0).cgColor
+            button.layer.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
             button.layer.cornerRadius = 15
             button.layer.masksToBounds = true
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +53,16 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         setupValueCell()
 
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+         super.traitCollectionDidChange(previousTraitCollection)
+
+         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+             addButton.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+             addButton.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
+             navigationItem.rightBarButtonItem?.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+         }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -64,8 +74,11 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         let vc = storyBoard.instantiateViewController(withIdentifier: "AddGroupViewController") as! AddGroupViewController
         let navigationController = UINavigationController(rootViewController: vc)
         vc.taskGroupsListTableViewController = self
-        navigationController.modalPresentationStyle = .automatic
-        present(navigationController, animated: true)
+        navigationController.modalPresentationStyle = .pageSheet
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        present(navigationController, animated: true, completion: nil)
     }
     
     private func setupLayout() {
@@ -85,12 +98,14 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(CustomCollectionViewCell.nib, forCellReuseIdentifier:  CustomCollectionViewCell.identifier)
+        
+        tableView.backgroundView = UIImageView(image: UIImage(named: "pencil.circle.fill"))
+        tableView.register(CustomCategoryTableViewCell.nib, forCellReuseIdentifier: CustomCategoryTableViewCell.identifier)
     }
 
     func setNavigationBar() {
         let currentDate = setCurrentDate()
-        title = currentDate
+        title = currentDate.capitalizingFirstLetter()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.isTranslucent = true
@@ -116,10 +131,10 @@ class TaskGroupsListViewController: UIViewController, UITableViewDataSource, UIT
         switch buttonItem {
         case .menu:
             navigationItem.rightBarButtonItem = UIBarButtonItem(image:  UIImage(systemName: "gearshape"), menu: setContextMenu())
-            navigationItem.rightBarButtonItem?.tintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
         case .apply:
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(didTapApply))
-            navigationItem.rightBarButtonItem?.tintColor = .black
+            navigationItem.rightBarButtonItem?.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
         case .save:
             break
         }

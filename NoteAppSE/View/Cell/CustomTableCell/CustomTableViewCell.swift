@@ -18,7 +18,6 @@ class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var taskName: UITextField!
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var radioButton: UIButton!
-    var tableViewController: TodoListTableViewController?
     var customColor: UIColor?
     
     var delegate: MyCellDelegate?
@@ -43,15 +42,13 @@ class CustomTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func setupEmptyRadioButton() {
-        radioButton.layer.cornerRadius = 10
-        radioButton.layer.borderWidth = 1
-        radioButton.layer.borderColor = customColor?.cgColor
-        radioButton.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        radioButton.setBackgroundImage(UIImage(systemName: Image.circle), for: .normal)
+        radioButton.tintColor = customColor
     }
     
     func setupFullRadioButton() {
-        radioButton.layer.cornerRadius = 10
-        radioButton.layer.backgroundColor = customColor?.cgColor
+        radioButton.setBackgroundImage(UIImage(systemName: Image.checkmarkCircleFill), for: .normal)
+        radioButton.tintColor = customColor
     }
     
     @objc func didTextFieldShouldBeginEditing() {
