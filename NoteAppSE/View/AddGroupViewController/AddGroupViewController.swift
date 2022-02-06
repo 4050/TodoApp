@@ -63,7 +63,6 @@ extension AddGroupViewController: CustomColorCollectionViewCellDelegate {
     func collectionView(collectionviewcell: CustomColorCollectionViewCell?, index: Int, didTappedInTableViewCell: UITableViewCell) {
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddTaskViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate{
+class OldAddTaskViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionColorView: UICollectionView!
     @IBOutlet weak var colorTableCell: UITableViewCell!
@@ -96,7 +96,7 @@ class AddTaskViewController: UITableViewController, UICollectionViewDataSource, 
     }
 }
 
-extension AddTaskViewController: CustomColorCollectionViewCellDelegate {
+extension OldAddTaskViewController: CustomColorCollectionViewCellDelegate {
     
     func collectionView(collectionviewcell: CustomColorCollectionViewCell?, index: Int, didTappedInTableViewCell: UITableViewCell) {
     }

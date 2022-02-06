@@ -71,14 +71,14 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     
     @objc func tapAddButton() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "AddTaskViewController") as! AddTaskViewController
+        let vc = storyBoard.instantiateViewController(withIdentifier: "NewAddTaskTableViewController") as! NewAddTaskTableViewController
         let navigationController = UINavigationController(rootViewController: vc)
         vc.todoListTableViewController = self
         vc.selectedCategory = selectedCategory
-        navigationController.modalPresentationStyle = .pageSheet
-        if let sheet = navigationController.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-        }
+       navigationController.modalPresentationStyle = .pageSheet
+       if let sheet = navigationController.sheetPresentationController {
+           sheet.detents = [.medium(), .large()]
+       }
         present(navigationController, animated: true, completion: nil)
     }
     

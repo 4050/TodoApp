@@ -7,17 +7,22 @@
 
 import UIKit
 
-class CustomDetailTableViewCell: UITableViewCell {
+protocol CustomDetailTableViewCellDelegate {
+    func getDescriptionTask(cell: CustomDetailTableViewCell)
+}
 
+class CustomDetailTableViewCell: UITableViewCell, UITextViewDelegate {
+
+    @IBOutlet weak var textView: UITextView!
+
+    var delegate: CustomDetailTableViewCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        textView.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     class var identifier: String {
@@ -28,5 +33,7 @@ class CustomDetailTableViewCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: nil)
     }
     
-    
+    func textViewDidChange(_ textView: UITextView) {
+        delegate?.getDescriptionTask(cell: self)
+       }
 }

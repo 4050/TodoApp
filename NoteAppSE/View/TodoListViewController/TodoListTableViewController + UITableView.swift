@@ -16,7 +16,7 @@ extension TodoListTableViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
         let color = UIColor(hex: taskLists[indexPath.row].colorTask ?? "")
-
+        cell.accessoryType = .disclosureIndicator
         cell.taskName.text = taskLists[indexPath.row].nameTask
         cell.customColor = color
         cell.taskName.tag = indexPath.row
