@@ -12,6 +12,7 @@
 		8516EA5727788C660007B2B0 /* CustomColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8516EA5527788C660007B2B0 /* CustomColorCollectionViewCell.xib */; };
 		8529008926888D9100299401 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8529008826888D9100299401 /* CategoryModel.swift */; };
 		854BE64C27182914007A1F14 /* TodoListTableViewController + UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854BE64B27182914007A1F14 /* TodoListTableViewController + UITableView.swift */; };
+		855C0F7027AFFAFE00173D5F /* PresentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855C0F6F27AFFAFE00173D5F /* PresentService.swift */; };
 		8583FDC5268C795A00BF7CA4 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8583FDC4268C795A00BF7CA4 /* DateService.swift */; };
 		8583FDC8268C904300BF7CA4 /* DateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8583FDC7268C904300BF7CA4 /* DateModel.swift */; };
 		8584D43A26F7828F00B33288 /* OldAddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8584D43926F7828F00B33288 /* OldAddTaskViewController.swift */; };
@@ -77,6 +78,7 @@
 		8516EA5527788C660007B2B0 /* CustomColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		8529008826888D9100299401 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		854BE64B27182914007A1F14 /* TodoListTableViewController + UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoListTableViewController + UITableView.swift"; sourceTree = "<group>"; };
+		855C0F6F27AFFAFE00173D5F /* PresentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentService.swift; sourceTree = "<group>"; };
 		8583FDC4268C795A00BF7CA4 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		8583FDC7268C904300BF7CA4 /* DateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateModel.swift; sourceTree = "<group>"; };
 		8584D43926F7828F00B33288 /* OldAddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldAddTaskViewController.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 			children = (
 				8583FDC4268C795A00BF7CA4 /* DateService.swift */,
 				859BDB912741140C00DB1A22 /* StorageService.swift */,
+				855C0F6F27AFFAFE00173D5F /* PresentService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				859B9295269203850010D832 /* UIColor + Hex.swift in Sources */,
 				8583FDC5268C795A00BF7CA4 /* DateService.swift in Sources */,
 				859595C52797567800C9EF35 /* CustomSwitcherTableViewCell.swift in Sources */,
+				855C0F7027AFFAFE00173D5F /* PresentService.swift in Sources */,
 				85999B86274ACA6F00FB7E49 /* Group+CoreDataProperties.swift in Sources */,
 				85BC9B7F265C2F4F0025DBF8 /* CustomCategoryTableViewCell.swift in Sources */,
 				85AC497927007EFD0055A10B /* UITableViewController + DismissKeyboard.swift in Sources */,

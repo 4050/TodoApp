@@ -17,7 +17,7 @@ extension NewAddTaskTableViewController: CustomColorCollectionViewCellDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomColorCollectionViewCell", for: indexPath) as! CustomColorCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomColorCollectionViewCell.identifier, for: indexPath) as! CustomColorCollectionViewCell
         cell.delegate = self
         cell.customColor = colors[indexPath.row]
         if !cell.checkmark {

@@ -20,6 +20,14 @@ class AddGroupViewController: UITableViewController, UICollectionViewDataSource,
     var checkmarkIndex: Int?
     var taskGroupsListTableViewController: TaskGroupsListViewController?
     
+    class var identifier: String {
+        return String(describing: self)
+    }
+    
+    class var nib: UINib {
+        return UINib(nibName: identifier, bundle: nil)
+    }
+    
     var colors: [UIColor] = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemBlue, UIColor.systemYellow, UIColor.systemOrange]
     
     override func viewDidLoad() {
@@ -31,6 +39,8 @@ class AddGroupViewController: UITableViewController, UICollectionViewDataSource,
         let cellNib = UINib(nibName: "CustomColorCollectionViewCell", bundle: nil)
         self.collectionColorView.register(cellNib, forCellWithReuseIdentifier: "CustomColorCollectionViewCell")
     }
+    
+    
     
     func setupNavigationBar() {
         let appearance = UINavigationBarAppearance()

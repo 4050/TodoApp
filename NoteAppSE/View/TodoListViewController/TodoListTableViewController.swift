@@ -192,7 +192,6 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
 
 
 extension TodoListTableViewController: MyCellDelegate {
-    
     func didTextFieldShouldEndEditing(_ cell: CustomTableViewCell) {
         setupRightBarButtonItem(buttonItem: .menu)
         cell.taskName.resignFirstResponder()
@@ -227,5 +226,11 @@ extension TodoListTableViewController: MyCellDelegate {
             taskListModel.updateTask(comletedTask: taskLists[indexPath.row].completedTask,
                                      parameter: .completedTask)
         }
+    }
+}
+
+extension TodoListTableViewController {
+    class var identifier: String {
+        return String(describing: self)
     }
 }

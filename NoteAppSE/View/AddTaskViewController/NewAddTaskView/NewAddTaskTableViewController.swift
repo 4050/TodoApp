@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum DetentIdentifier {
+    case large
+    case medium
+}
+
 enum NewTaskSection: Int {
     case Name = 0
     case Color = 1
@@ -15,9 +20,17 @@ enum NewTaskSection: Int {
     case Time = 4
 }
 
-enum DetentIdentifier {
-    case large
-    case medium
+enum NameOfSection {
+    static let title = "Название"
+    static let color = "Цвет"
+    static let description = "Подробности"
+}
+
+enum RowInSection {
+    static var title = [1]
+    static var color = [1]
+    static var detailSwitch = [1]
+    static var description = [Int]()
 }
 
 class NewAddTaskTableViewController: UITableViewController {
@@ -26,11 +39,11 @@ class NewAddTaskTableViewController: UITableViewController {
     var selectedCategory: Group?
     var todoListTableViewController: TodoListTableViewController?
     
-    var rowInSection: [Int] = []
     var selectColor: String?
     var nameTask: String?
     var descriptionTask: String?
     var colors: [UIColor] = [UIColor.systemGreen, UIColor.systemRed, UIColor.systemBlue, UIColor.systemYellow, UIColor.systemOrange]
+    let nameSection = [NameOfSection.title, NameOfSection.color, NameOfSection.description, nil]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +85,7 @@ class NewAddTaskTableViewController: UITableViewController {
     }
     
     func deleteCellTable() {
-        rowInSection.remove(at: 0)
+        RowInSection.description.remove(at: 0)
         tableView.beginUpdates()
         tableView.deleteRows(at: [IndexPath(row: 0, section: 3)], with: .automatic)
         tableView.endUpdates()
@@ -80,9 +93,9 @@ class NewAddTaskTableViewController: UITableViewController {
     }
     
     func addCellTable() {
-        rowInSection.append(1)
+        RowInSection.description.append(1)
         tableView.beginUpdates()
-        tableView.insertRows(at: [IndexPath.init(row: rowInSection.count - 1, section: 3)], with: .automatic)
+        tableView.insertRows(at: [IndexPath.init(row: RowInSection.description.count - 1, section: 3)], with: .automatic)
         tableView.endUpdates()
         sheetAnimate(.large)
     }
@@ -100,8 +113,6 @@ class NewAddTaskTableViewController: UITableViewController {
         }
     }
 }
-
-
 
 extension NewAddTaskTableViewController: CustomTaskTableViewCellDelegate, CustomDetailTableViewCellDelegate {
     func getDescriptionTask(cell: CustomDetailTableViewCell) {

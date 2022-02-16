@@ -10,25 +10,23 @@ import UIKit
 
 extension NewAddTaskTableViewController  {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let nameSection = ["Название", "Цвет", "Подробности", nil]
         return nameSection[section]
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        let nameSection = ["Название", "Цвет", "Подробности", ""]
         return nameSection.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
+            return RowInSection.title.count
         case 1:
-            return 1
+            return RowInSection.color.count
         case 2:
-            return 1
+            return RowInSection.detailSwitch.count
         case 3:
-            return rowInSection.count
+            return RowInSection.description.count
         default:
             return 1
         }
@@ -38,7 +36,6 @@ extension NewAddTaskTableViewController  {
         if (section == 3) {
             return CGFloat.leastNormalMagnitude
         }
-        
         return tableView.sectionHeaderHeight
     }
     

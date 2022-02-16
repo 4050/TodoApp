@@ -56,7 +56,7 @@ class TaskGroupsListViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
          super.traitCollectionDidChange(previousTraitCollection)
-
+        
          if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
              addButton.configuration?.baseBackgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
              addButton.setTitleColor(UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white, for: .normal)
@@ -70,14 +70,20 @@ class TaskGroupsListViewController: UIViewController {
     }
 
     @objc func tapAddButton() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "AddGroupViewController") as! AddGroupViewController
-        let navigationController = UINavigationController(rootViewController: vc)
+       let presentService = PresentService.shared
+        
+        let vc = presentService.getViewController(storyboard: "Main", viewControllerType: AddGroupViewController.self, identifierVC: AddGroupViewController.identifier)
+       let navigationController = presentService.presentService(rootVC: vc)
+        
+       // let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+       // let vc = storyBoard.instantiateViewController(withIdentifier: "AddGroupViewController") as! AddGroupViewController
+       // let navigationController = UINavigationController(rootViewController: vc)
+        
         vc.taskGroupsListTableViewController = self
-        navigationController.modalPresentationStyle = .pageSheet
-        if let sheet = navigationController.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-        }
+      //  navigationController.modalPresentationStyle = .pageSheet
+      //  if let sheet = navigationController.sheetPresentationController {
+      //      sheet.detents = [.medium(), .large()]
+      //  }
         present(navigationController, animated: true, completion: nil)
     }
     
@@ -174,13 +180,13 @@ class TaskGroupsListViewController: UIViewController {
     
     func passData(index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: "TodoListTableViewController") as? TodoListTableViewController else { return }
+        guard let vc = storyboard.instantiateViewController(identifier: TodoListTableViewController.identifier) as? TodoListTableViewController else { return }
         vc.groupList = groupList?[index]
         if let indexPath = tableView.indexPathForSelectedRow {
             vc.selectedCategory = groupList?[indexPath.row]
         }
 
-        vc.selectColor = UIColor(hex: groupList![index].colorGroup ?? "#9992ff")
+        vc.selectColor = UIColor(hex: groupList?[index].colorGroup ?? "#9992ff")
         navigationController?.pushViewController(vc, animated: true)
     }
     
