@@ -24,10 +24,10 @@ enum Colors {
 }
 
 enum Parametеrs {
-        case colorTask
-        case completedTask
-        case nameTask
-        case groupTask
+    case colorTask
+    case completedTask
+    case nameTask
+    case groupTask
 }
 
 
