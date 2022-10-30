@@ -9,7 +9,6 @@ import Foundation
 import CoreData
 
 class StorageService {
-    
     static let shared = StorageService()
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -66,13 +65,14 @@ class StorageService {
         }
     }
     
-    func saveTask(colorTask: String, completedTask: Bool, nameTask: String, groupTask: Group) {
+    func saveTask(colorTask: String, completedTask: Bool, nameTask: String, groupTask: Group, descriptionTask: String) {
         let taskObject = NSEntityDescription.insertNewObject(forEntityName: "Task", into: context) as! Task
         backgroundMOC.performAndWait {
             taskObject.nameTask = nameTask
             taskObject.completedTask = completedTask
             taskObject.colorTask = colorTask
             taskObject.groupList = groupTask
+            taskObject.descriptionTask = descriptionTask
             do {
                 try context.save()
                 print("Save")
@@ -82,7 +82,7 @@ class StorageService {
         }
     }
     
-    func updateTask(colorTask: String? = nil, completedTask: Bool? = nil, nameTask: String? = nil, groupTask: Group? = nil, parameter: Parametеrs) {
+    func updateTask(colorTask: String? = nil, completedTask: Bool? = nil, nameTask: String? = nil, groupTask: Group? = nil, descriptionTask: String? = nil, parameter: Parametеrs) {
         let taskObject = Task(context: context)
         backgroundMOC.performAndWait {
             switch(parameter) {
@@ -94,6 +94,8 @@ class StorageService {
                 taskObject.completedTask = completedTask ?? false
             case .groupTask:
                 taskObject.groupList = groupTask
+            case .descriptionTask:
+                taskObject.descriptionTask = descriptionTask
             }
             do {
                 try context.save()

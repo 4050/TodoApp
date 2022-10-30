@@ -28,6 +28,7 @@ enum Parametеrs {
     case completedTask
     case nameTask
     case groupTask
+    case descriptionTask
 }
 
 

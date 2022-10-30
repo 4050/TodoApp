@@ -71,13 +71,14 @@ extension TodoListTableViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        passData()
+        passData(indexPath: indexPath)
     }
     
-    func passData() {
+    func passData(indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "DetailTableViewController") as? DetailTableViewController else { return }
-        //vc.modalPresentationStyle = .fullScreen
+        
+        vc.getData(nameTodo: taskLists[indexPath.row].nameTask ?? "error", detailTask: taskLists[indexPath.row].descriptionTask ?? "error")
         navigationController?.pushViewController(vc, animated: true)
     }
 }

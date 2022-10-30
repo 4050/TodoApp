@@ -8,7 +8,6 @@
 import UIKit
 
 class CustomColorTableViewCell: UITableViewCell {
-    
 
     @IBOutlet weak var customCollectionView: UICollectionView!
     

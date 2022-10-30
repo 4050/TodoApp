@@ -56,7 +56,7 @@ class NewAddTaskTableViewController: UITableViewController {
         appearance.titleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor(hex: Colors.darkColor).cgColor]
         
-        title = "Новый список"
+        title = "Новая задача"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = UIColor(hex: Colors.darkColor)
         navigationController?.navigationBar.backItem?.title = ""
@@ -78,10 +78,10 @@ class NewAddTaskTableViewController: UITableViewController {
     @objc func addTapped() {
         let task: String = nameTask ?? "Empty"
         let color: String = selectColor ?? UIColor.systemBlue.toHexString()
-        let taskModel = TaskModel(taskName: task, colorCell: color, completedTask: false)
+        let descriptionTask: String = descriptionTask ?? ""
+        let taskModel = TaskModel(taskName: task, colorCell: color, completedTask: false, descriptionTask: descriptionTask)
         todoListTableViewController?.addTaskToTaskList(taskModel: taskModel)
         dismiss(animated: true, completion: nil)
-        
     }
     
     func deleteCellTable() {

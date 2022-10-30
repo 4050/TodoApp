@@ -70,20 +70,11 @@ class TaskGroupsListViewController: UIViewController {
     }
 
     @objc func tapAddButton() {
-       let presentService = PresentService.shared
-        
-        let vc = presentService.getViewController(storyboard: "Main", viewControllerType: AddGroupViewController.self, identifierVC: AddGroupViewController.identifier)
-       let navigationController = presentService.presentService(rootVC: vc)
-        
-       // let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-       // let vc = storyBoard.instantiateViewController(withIdentifier: "AddGroupViewController") as! AddGroupViewController
-       // let navigationController = UINavigationController(rootViewController: vc)
+       let vc = PresentService.shared.getViewController(storyboard: "Main", viewControllerType: AddGroupViewController.self, identifierVC: AddGroupViewController.identifier)
+       let navigationController = PresentService.shared.presentVC(rootVC: vc, detent: true)
         
         vc.taskGroupsListTableViewController = self
-      //  navigationController.modalPresentationStyle = .pageSheet
-      //  if let sheet = navigationController.sheetPresentationController {
-      //      sheet.detents = [.medium(), .large()]
-      //  }
+
         present(navigationController, animated: true, completion: nil)
     }
     
@@ -151,9 +142,9 @@ class TaskGroupsListViewController: UIViewController {
                        delay: 0.0,
                        options: .curveEaseOut,
                        animations: { [weak self] in
-            self!.tableView.isEditing = true
-            self!.setRightBarButtonItem(buttonItem: .apply)
-            self!.addButton.alpha = 0
+            self?.tableView.isEditing = true
+            self?.setRightBarButtonItem(buttonItem: .apply)
+            self?.addButton.alpha = 0
         }, completion: nil)
     }
 
@@ -162,9 +153,9 @@ class TaskGroupsListViewController: UIViewController {
                        delay: 0.0,
                        options: .curveEaseIn,
                        animations: { [weak self] in
-            self!.tableView.isEditing = false
-            self!.setRightBarButtonItem(buttonItem: .menu)
-            self!.addButton.alpha = 1
+            self?.tableView.isEditing = false
+            self?.setRightBarButtonItem(buttonItem: .menu)
+            self?.addButton.alpha = 1
         }, completion: nil)
     }
     

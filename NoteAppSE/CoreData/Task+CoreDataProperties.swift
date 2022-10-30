@@ -20,6 +20,7 @@ extension Task {
     @NSManaged public var colorTask: String?
     @NSManaged public var completedTask: Bool
     @NSManaged public var groupList: Group?
+    @NSManaged public var descriptionTask: String?
 
 }
 

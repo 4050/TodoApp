@@ -23,7 +23,7 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     var tableView = UITableView()
     var selectColor: UIColor?
     
-    var detailText: String? 
+    var descriptionText: String?
     
     var selectedCategory: Group? {
         didSet {
@@ -92,8 +92,8 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func loadTask() {
-        let task = selectedCategory?.taskList?.allObjects as? [Task]
-        taskLists = task!
+        guard let task = selectedCategory?.taskList?.allObjects as? [Task] else { return }
+        taskLists = task
     }
     
     
@@ -111,8 +111,8 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         title = groupList?.nameGroup
         
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: selectColor]
-        appearance.largeTitleTextAttributes = [.foregroundColor: selectColor]
+        appearance.titleTextAttributes = [.foregroundColor: selectColor as Any]
+        appearance.largeTitleTextAttributes = [.foregroundColor: selectColor as Any]
         
         navigationItem.standardAppearance = appearance
         
@@ -183,8 +183,9 @@ class TodoListTableViewController: UIViewController, UITableViewDataSource, UITa
         let taskName: String = taskModel.taskName ?? "default"
         let colorCell: String = taskModel.colorCell ?? Colors.darkColor
         let completed: Bool = taskModel.completedTask ?? false
+        let descriptionTask: String = taskModel.descriptionTask ?? ""
         let parentCategory: Group = selectedCategory!
-        taskListModel.saveTask(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory)
+        taskListModel.saveTask(colorTask: colorCell, completedTask: completed, nameTask: taskName, groupTask: parentCategory, descriptionTask: descriptionTask)
         loadTask()
         tableView.reloadData()
     }

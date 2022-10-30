@@ -11,17 +11,19 @@ import UIKit
 class PresentService {
     static let shared = PresentService()
     
-    func getViewController<T: UIViewController>(storyboard: String, viewControllerType: T.Type, identifierVC: String) -> T {
-        let storyBoard: UIStoryboard = UIStoryboard(name: storyboard, bundle: nil)
-        let vc = (storyBoard.instantiateViewController(withIdentifier: identifierVC) as? T)
-        return vc!
-    }
+   func getViewController<T: UIViewController>(storyboard: String, viewControllerType: T.Type, identifierVC: String) -> T {
+       let storyBoard: UIStoryboard = UIStoryboard(name: storyboard, bundle: nil)
+       let vc = storyBoard.instantiateViewController(withIdentifier: identifierVC) as! T
+       return vc
+   }
     
-    func presentService(rootVC: UIViewController) -> UINavigationController {
+    func presentVC(rootVC: UIViewController, detent: Bool) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootVC)
-        if let sheet = navigationController.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-        }
+        if detent == true {
+            if let sheet = navigationController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+            }
+        } 
         return navigationController
     }
 }

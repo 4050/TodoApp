@@ -35,14 +35,16 @@ struct TaskModel {
     var colorCell: String?
     var completedTask: Bool?
     var parentCategory: Group?
+    var descriptionTask: String?
     
     var storageService = StorageService()
     
-    init(taskName: String? = nil, colorCell: String? = nil, completedTask: Bool? = nil, parentCategory: Group? = nil) {
+    init(taskName: String? = nil, colorCell: String? = nil, completedTask: Bool? = nil, parentCategory: Group? = nil, descriptionTask: String? = nil) {
         self.taskName = taskName
         self.colorCell = colorCell
         self.completedTask = completedTask
         self.parentCategory = parentCategory
+        self.descriptionTask = descriptionTask
     }
     
     func getTaskList() -> [Task] {
@@ -54,8 +56,8 @@ struct TaskModel {
         StorageService.shared.deleteTask(task: task)
     }
     
-    func saveTask(colorTask: String, completedTask: Bool, nameTask: String, groupTask: Group) {
-        StorageService.shared.saveTask(colorTask: colorTask, completedTask: completedTask, nameTask: nameTask, groupTask: groupTask)
+    func saveTask(colorTask: String, completedTask: Bool, nameTask: String, groupTask: Group, descriptionTask: String) {
+        StorageService.shared.saveTask(colorTask: colorTask, completedTask: completedTask, nameTask: nameTask, groupTask: groupTask, descriptionTask: descriptionTask)
     }
     
     func updateTask(comletedTask: Bool, parameter: Parametеrs) {

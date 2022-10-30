@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8512F91D2782348100856CE0 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512F91C2782348100856CE0 /* String.swift */; };
+		8512F91D2782348100856CE0 /* String + CapitalizingFirstLetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512F91C2782348100856CE0 /* String + CapitalizingFirstLetter.swift */; };
 		8516EA5627788C660007B2B0 /* CustomColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8516EA5427788C660007B2B0 /* CustomColorCollectionViewCell.swift */; };
 		8516EA5727788C660007B2B0 /* CustomColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8516EA5527788C660007B2B0 /* CustomColorCollectionViewCell.xib */; };
 		8529008926888D9100299401 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8529008826888D9100299401 /* CategoryModel.swift */; };
@@ -73,7 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8512F91C2782348100856CE0 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		8512F91C2782348100856CE0 /* String + CapitalizingFirstLetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + CapitalizingFirstLetter.swift"; sourceTree = "<group>"; };
 		8516EA5427788C660007B2B0 /* CustomColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8516EA5527788C660007B2B0 /* CustomColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		8529008826888D9100299401 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
@@ -291,7 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				859A8989272567C1004DFF1F /* Constants.swift */,
-				8512F91C2782348100856CE0 /* String.swift */,
+				8512F91C2782348100856CE0 /* String + CapitalizingFirstLetter.swift */,
 				859B9294269203850010D832 /* UIColor + Hex.swift */,
 				85AC497827007EFD0055A10B /* UITableViewController + DismissKeyboard.swift */,
 			);
@@ -548,7 +548,7 @@
 				8583FDC8268C904300BF7CA4 /* DateModel.swift in Sources */,
 				85999B85274ACA6F00FB7E49 /* Group+CoreDataClass.swift in Sources */,
 				85BC9B4D265C2C530025DBF8 /* AppDelegate.swift in Sources */,
-				8512F91D2782348100856CE0 /* String.swift in Sources */,
+				8512F91D2782348100856CE0 /* String + CapitalizingFirstLetter.swift in Sources */,
 				85999B87274ACA6F00FB7E49 /* Task+CoreDataClass.swift in Sources */,
 				8529008926888D9100299401 /* CategoryModel.swift in Sources */,
 				859595BC279752E000C9EF35 /* CustomColorTableViewCell.swift in Sources */,
